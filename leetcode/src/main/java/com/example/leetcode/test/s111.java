@@ -50,8 +50,39 @@ public class s111 {
 //    }
 
 
+//    public static int minDepth(TreeNode root) {
+//        if (root==null) {
+//            return 0;
+//        }
+//
+//        Queue<TreeNode> q = new LinkedList<>();
+//        q.offer(root);
+//        int depth = 1;
+//
+//        while (!q.isEmpty()){
+//            int n = q.size();
+//            for (int i = 0; i < n; i++) {
+//                TreeNode tmp = q.poll();
+//                if (tmp.left==null && tmp.right==null) {
+//                    return depth;
+//                }
+//                if (tmp.left!=null){
+//                    q.offer(tmp.left);
+//                }
+//                if (tmp.right!=null){
+//                    q.offer(tmp.right);
+//                }
+//            }
+//            depth++;
+//
+//        }
+//        return depth;
+//
+//    }
+
+
     public static int minDepth(TreeNode root) {
-        if (root==null) {
+        if (root==null){
             return 0;
         }
 
@@ -62,22 +93,21 @@ public class s111 {
         while (!q.isEmpty()){
             int n = q.size();
             for (int i = 0; i < n; i++) {
-                TreeNode tmp = q.poll();
-                if (tmp.left==null && tmp.right==null) {
+                TreeNode cur = q.poll();
+                if (cur.left==null && cur.right==null){
                     return depth;
                 }
-                if (tmp.left!=null){
-                    q.offer(tmp.left);
+                if (cur.left!=null){
+                    q.offer(cur.left);
                 }
-                if (tmp.right!=null){
-                    q.offer(tmp.right);
+                if (cur.right!=null) {
+                    q.offer(cur.right);
                 }
             }
             depth++;
-
         }
         return depth;
-
     }
+
 
 }

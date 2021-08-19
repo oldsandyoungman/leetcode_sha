@@ -37,22 +37,84 @@ public class s752 {
 //        }
 //    }
 
-    public static int openLock(String[] deadends, String target) {
-//        Set<String> deadset = new HashSet<>();
-//        Collections.addAll(deadset, deadends);
+//    public static int openLock(String[] deadends, String target) {
+////        Set<String> deadset = new HashSet<>();
+////        Collections.addAll(deadset, deadends);
+//
+//        Set<String> visited = new HashSet<>();
+//        Collections.addAll(visited, deadends);
+//        if (visited.contains("0000")) {
+//            return -1;
+//        }
+//
+//        Queue<String> q = new LinkedList<>();
+//        q.offer("0000");
+//        visited.add("0000");
+//        int step = 0;
+//
+//        while (!q.isEmpty()){
+//            int n = q.size();
+//            for (int i = 0; i < n; i++) {
+//                String cur = q.poll();
+//                if (cur.equals(target)) {
+//                    return step;
+//                }
+//                for (int j = 0; j < 4; j++) {
+//                    String up = up_sha(cur,j);
+//                    if (!visited.contains(up)) {
+//                        q.offer(up);
+//                        visited.add(up);
+//                    }
+//                    String down = down_sha(cur,j);
+//                    if (!visited.contains(down)) {
+//                        q.offer(down);
+//                        visited.add(down);
+//                    }
+//                }
+//            }
+//            step++;
+//        }
+//
+//        return -1;
+//
+//
+//
+//
+//
+//
+//    }
+//
+//    private static String up_sha(String cur, int i) {
+//        char[] c = cur.toCharArray();
+//        if (c[i]=='9') {
+//            c[i] = '0';
+//        }else {
+//            c[i] += 1;
+//        }
+//        return new String(c);
+//    }
+//    private static String down_sha(String cur, int i) {
+//        char[] c = cur.toCharArray();
+//        if (c[i]=='0') {
+//            c[i] = '9';
+//        }else {
+//            c[i] -= 1;
+//        }
+//        return new String(c);
+//    }
 
-        Set<String> visited = new HashSet<>();
-        Collections.addAll(visited, deadends);
-        if (visited.contains("0000")) {
-            return -1;
+    public static int openLock(String[] deadends, String target) {
+        Set<String> deadsha = new HashSet<>();
+        Collections.addAll(deadsha, deadends);
+        if (deadsha.contains("0000")){
+            return 0;
         }
 
         Queue<String> q = new LinkedList<>();
         q.offer("0000");
-        visited.add("0000");
         int step = 0;
 
-        while (!q.isEmpty()){
+        while (!q.isEmpty()) {
             int n = q.size();
             for (int i = 0; i < n; i++) {
                 String cur = q.poll();
@@ -61,46 +123,40 @@ public class s752 {
                 }
                 for (int j = 0; j < 4; j++) {
                     String up = up_sha(cur,j);
-                    if (!visited.contains(up)) {
+                    if (!deadsha.contains(up)) {
                         q.offer(up);
-                        visited.add(up);
+                        deadsha.add(up);
                     }
                     String down = down_sha(cur,j);
-                    if (!visited.contains(down)) {
+                    if (!deadsha.contains(down)) {
                         q.offer(down);
-                        visited.add(down);
+                        deadsha.add(down);
                     }
                 }
             }
             step++;
         }
-
-        return -1;
-
-
-
-
-
-
+        return step;
     }
 
-    private static String up_sha(String cur, int i) {
-        char[] c = cur.toCharArray();
-        if (c[i]=='9') {
-            c[i] = '0';
+    private static String up_sha(String cur, int j) {
+        char[] res = cur.toCharArray();
+        if (res[j]=='9') {
+            res[j] = '0';
         }else {
-            c[i] += 1;
+            res[j]++;
         }
-        return new String(c);
+        return new String(res);
     }
-    private static String down_sha(String cur, int i) {
-        char[] c = cur.toCharArray();
-        if (c[i]=='0') {
-            c[i] = '9';
+    private static String down_sha(String cur, int j) {
+        char[] res = cur.toCharArray();
+        if (res[j]=='0') {
+            res[j] = '9';
         }else {
-            c[i] -= 1;
+            res[j]--;
         }
-        return new String(c);
+        return new String(res);
     }
+
 
 }
