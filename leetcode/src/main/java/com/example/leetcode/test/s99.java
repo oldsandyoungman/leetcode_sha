@@ -10,10 +10,10 @@ import java.util.List;
 public class s99 {
 
     public static void main(String[] args) {
-        TreeNode a = new TreeNode(2);
-        TreeNode b = new TreeNode(1);
-        TreeNode c = new TreeNode(4);
-        TreeNode d = new TreeNode(3);
+        TreeNode a = new TreeNode(3);
+        TreeNode b = new TreeNode(4);
+        TreeNode c = new TreeNode(1);
+        TreeNode d = new TreeNode(2);
         TreeNode e = new TreeNode(5);
 
         a.left = b;
@@ -24,7 +24,7 @@ public class s99 {
 
 //        List<Integer> integers = inorderTraversal(null);
         recoverTree(a);
-        System.out.println();
+        System.out.println(a);
     }
 
 //    给你二叉搜索树的根节点 root ，该树中的两个节点被错误地交换。请在不改变其结构的情况下，恢复这棵树。
@@ -97,26 +97,62 @@ public class s99 {
 //        secondNode.val = tmp;
 //    }
 
-    public static TreeNode firstNode = null;
-    public static TreeNode secondNode = null;
-    public static TreeNode preNode = new TreeNode(Integer.MIN_VALUE);
+
+
+
+
+//    public static TreeNode firstNode = null;
+//    public static TreeNode secondNode = null;
+//    public static TreeNode preNode = new TreeNode(Integer.MIN_VALUE);
+//
+//    public static void recoverTree(TreeNode root) {
+//
+//        in_order(root);
+//        int tmp = firstNode.val;
+//        firstNode.val = secondNode.val;
+//        secondNode.val = tmp;
+//    }
+//
+//    private static void in_order(TreeNode root) {
+//        if (root == null) return;
+//        in_order(root.left);
+//        if (firstNode == null && preNode.val > root.val) firstNode = preNode;
+//        if (firstNode != null && preNode.val > root.val) secondNode = root;
+//        preNode = root;
+//        in_order(root.right);
+//    }
+
+
+    public static TreeNode first = null;
+    public static TreeNode second = null;
+    public static TreeNode pre = new TreeNode(Integer.MIN_VALUE);
+
 
     public static void recoverTree(TreeNode root) {
+        traverse(root);
+        int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
 
-        in_order(root);
-        int tmp = firstNode.val;
-        firstNode.val = secondNode.val;
-        secondNode.val = tmp;
     }
 
-    private static void in_order(TreeNode root) {
-        if (root == null) return;
-        in_order(root.left);
-        if (firstNode == null && preNode.val > root.val) firstNode = preNode;
-        if (firstNode != null && preNode.val > root.val) secondNode = root;
-        preNode = root;
-        in_order(root.right);
-    }
+    public static void traverse(TreeNode root) {
+        if (root == null) {
+            return;
+        }
 
+        traverse(root.left);
+
+        if (first == null && pre.val > root.val) {
+            first = pre;
+        }
+        if (first != null && pre != null && pre.val > root.val) {
+            second = root;
+        }
+        pre = root;
+
+        traverse(root.right);
+
+    }
 
 }
