@@ -34,41 +34,62 @@ public class s124 {
 //    链接：https://leetcode-cn.com/problems/binary-tree-maximum-path-sum
 //    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
-    public static int max_sha = Integer.MIN_VALUE;
-    public static int maxPathSum(TreeNode root) {
-        traverse(root);
-        return max_sha;
-    }
-
-    public static int traverse(TreeNode root) {
-        if(root==null){
-            return 0;
-        }
-        int left = traverse(root.left);
-        int right = traverse(root.right);
-        max_sha = Math.max(max_sha, root.val + left + right);
-        return Math.max(0,root.val + Math.max(left, right));
-    }
-
-//    int result = Integer.MIN_VALUE;
-//    public int maxPathSum(TreeNode root) {
-//        dfs(root);
-//        return result;
+//    public static int max_sha = Integer.MIN_VALUE;
+//    public static int maxPathSum(TreeNode root) {
+//        traverse(root);
+//        return max_sha;
 //    }
 //
-//    // 函数功能：返回当前节点能为父亲提供的贡献，需要结合上面的图来看！
-//    private int dfs(TreeNode root) {
-//        // 如果当前节点为叶子节点，那么对父亲贡献为 0
-//        if(root == null) return 0;
-//        // 如果不是叶子节点，计算当前节点的左右孩子对自身的贡献left和right
-//        int left = dfs(root.left);
-//        int right = dfs(root.right);
-//        // 更新最大值，就是当前节点的val 加上左右节点的贡献。
-//        result = Math.max(result, root.val + left + right);
-//        // 计算当前节点能为父亲提供的最大贡献，必须是把 val 加上！
-//        int max = Math.max(root.val + left, root.val + right);
-//        // 如果贡献小于0的话，直接返回0即可！
-//        return Math.max(max, 0);
+//    public static int traverse(TreeNode root) {
+//        if(root==null){
+//            return 0;
+//        }
+//        int left = traverse(root.left);
+//        int right = traverse(root.right);
+//        max_sha = Math.max(max_sha, root.val + left + right);
+//        return Math.max(0,root.val + Math.max(left, right));
 //    }
+
+
+
+
+    static int result = Integer.MIN_VALUE;
+    public static int maxPathSum(TreeNode root) {
+        dfs(root);
+        return result;
+    }
+
+    // 函数功能：返回当前节点能为父亲提供的贡献，需要结合上面的图来看！
+    private static int dfs(TreeNode root) {
+        // 如果当前节点为叶子节点，那么对父亲贡献为 0
+        if(root == null) return 0;
+        // 如果不是叶子节点，计算当前节点的左右孩子对自身的贡献left和right
+        int left = dfs(root.left);
+        int right = dfs(root.right);
+        // 更新最大值，就是当前节点的val 加上左右节点的贡献。
+        result = Math.max(result, root.val + left + right);
+        // 计算当前节点能为父亲提供的最大贡献，必须是把 val 加上！
+        int max = Math.max(root.val + left, root.val + right);
+        // 如果贡献小于0的话，直接返回0即可！
+        return Math.max(max, 0);
+    }
+
+
+
+//    public static int maxPathSum(TreeNode root) {
+//
+//    }
+//
+//    public static int max_sha = Integer.MIN_VALUE;
+//    public static int traverse(TreeNode root){
+//
+//        int left = traverse(root.left);
+//        int right = traverse(root.right);
+//        max_sha = Math.max(max_sha, root.val+left+right);
+//        return root.val + Math.max(left, right);
+//    }
+
+
+
 
 }
