@@ -17,7 +17,7 @@ public class s3 {
     }
 //    给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
 
-    public static int lengthOfLongestSubstring(String s) {
+    public static int lengthOfLongestSubstring2(String s) {
         if (s.length()==0){
             return 0;
         }
@@ -55,6 +55,27 @@ public class s3 {
         }
         return max_sha;
 
+    }
+
+
+    public static int lengthOfLongestSubstring(String s) {
+        Map<Character,Integer> window = new HashMap<>();
+        int left = 0;
+        int right = 0;
+        int max_sha = 0;
+
+        while (right<s.length()) {
+            char r = s.charAt(right);
+            window.put(r,window.getOrDefault(r,0)+1);
+            right++;
+            while (window.get(r)>1){
+                char l = s.charAt(left);
+                window.put(l,window.get(l)-1);
+                left++;
+            }
+            max_sha = Math.max(max_sha,right-left);
+        }
+        return max_sha;
     }
 
 }
