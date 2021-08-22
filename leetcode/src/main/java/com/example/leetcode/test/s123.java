@@ -1,6 +1,7 @@
 package com.example.leetcode.test;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import static java.lang.Math.max;
 
@@ -8,10 +9,14 @@ public class s123 {
 
     public static void main(String[] args) {
 //        int[] prices = {3,3,5,0,0,3,1,4};
-        int[] prices = {1,2,3,4,5};
+        int[] prices = {3,2,6,5,0,3};
+//        int[] prices = {1,2,3,4,5};
+//        int[] prices = {7,6,4,3,1};
 //        System.out.println(maxProfit3(prices));
 //        System.out.println(maxProfit4(prices));
-        System.out.println(maxProfit5(prices));
+//        System.out.println(maxProfit5(prices));
+//        System.out.println(maxProfit6(prices));
+        System.out.println(maxProfit7(prices));
 //        System.out.println(maxProfit(prices));
 //        System.out.println(Integer.MIN_VALUE/2);
     }
@@ -166,4 +171,54 @@ public class s123 {
         return Math.max(0, Math.max(dp[prices.length - 1][1][0], dp[prices.length - 1][2][0]));
     }
 
+
+
+    public static int maxProfit6(int[] prices) {
+        int n = prices.length;
+        int[][][] dp = new int[n][3][2];
+
+        dp[0][0][0] = 0;
+        dp[0][0][1] = -prices[0];
+        dp[0][1][0] = Integer.MIN_VALUE/2;
+        dp[0][1][1] = Integer.MIN_VALUE/2;
+        dp[0][2][0] = Integer.MIN_VALUE/2;
+        dp[0][2][1] = Integer.MIN_VALUE/2;
+
+        for (int i = 1; i < n; i++) {
+            dp[i][0][0] = 0;
+            dp[i][0][1] = Math.max(dp[i-1][0][1], -prices[i]);
+            dp[i][1][0] = Math.max(dp[i-1][1][0], dp[i-1][0][1]+prices[i]);
+            dp[i][1][1] = Math.max(dp[i-1][1][1], dp[i-1][1][0]-prices[i]);
+            dp[i][2][0] = Math.max(dp[i-1][2][0], dp[i-1][1][1]+prices[i]);
+            dp[i][2][1] = Integer.MIN_VALUE/2;
+        }
+        System.out.println(dp[n-1][2][0]);
+        System.out.println(dp[n-1][1][0]);
+
+        return Math.max(Math.max(dp[n-1][2][0], dp[n-1][1][0]), 0);
+
+    }
+
+    public static int maxProfit7(int[] prices) {
+        int n = prices.length;
+        int min_sha = Integer.MIN_VALUE/2;
+
+        int dp001 = -prices[0];
+        int dp010 = min_sha;
+        int dp011 = min_sha;
+        int dp020 = min_sha;
+
+        for (int i = 1; i < n; i++) {
+            int temp01 = dp001;
+            int temp10 = dp010;
+            int temp11 = dp011;
+            dp001 = Math.max(temp01, -prices[i]);
+            dp010 = Math.max(temp10, temp01+prices[i]);
+            dp011 = Math.max(temp11, temp10-prices[i]);
+            dp020 = Math.max(dp020, temp11+prices[i]);
+        }
+
+        return Math.max(Math.max(dp020, dp010), 0);
+
+    }
 }

@@ -3,8 +3,9 @@ package com.example.leetcode.test;
 public class s122 {
 
     public static void main(String[] args) {
-        int[] prices = {7,1,5,3,6,4};
+        int[] prices = {7, 1, 5, 3, 6, 4};
         System.out.println(maxProfit(prices));
+        System.out.println(maxProfit2(prices));
     }
 
 //    给定一个数组 prices ，其中 prices[i] 是一支给定股票第 i 天的价格。
@@ -38,8 +39,8 @@ public class s122 {
 
         for (int i = 1; i < prices.length; i++) {
             int temp = dp_i_0;
-            dp_i_0 = Math.max(temp, dp_i_1+prices[i]);
-            dp_i_1 = Math.max(dp_i_1, temp-prices[i]);
+            dp_i_0 = Math.max(temp, dp_i_1 + prices[i]);
+            dp_i_1 = Math.max(dp_i_1, temp - prices[i]);
         }
         return dp_i_0;
     }
@@ -55,4 +56,44 @@ public class s122 {
 //        return dp_i_0;
 //    }
 
+    public static int maxProfit2(int[] prices) {
+
+        int n = prices.length;
+        int[][] dp = new int[n][2];
+        int min_sha = Integer.MIN_VALUE / 2;
+
+        dp[0][0] = 0;
+        dp[0][1] = -prices[0];
+
+
+        for (int i = 1; i < n; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+
+        }
+
+        return Math.max(dp[n - 1][0], 0);
+
+    }
+
+    public static int maxProfit3(int[] prices) {
+
+        int n = prices.length;
+        int[][] dp = new int[n][2];
+        int min_sha = Integer.MIN_VALUE / 2;
+
+        int dp0 = 0;
+        int dp1 = -prices[0];
+
+
+        for (int i = 1; i < n; i++) {
+            int temp = dp0;
+            dp0 = Math.max(temp, dp1 + prices[i]);
+            dp1 = Math.max(dp1, temp - prices[i]);
+
+        }
+
+        return Math.max(dp0, 0);
+
+    }
 }

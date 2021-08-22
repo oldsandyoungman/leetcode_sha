@@ -4,7 +4,8 @@ public class s121 {
 
     public static void main(String[] args) {
         int[] prices = {7,1,5,3,6,4};
-        System.out.println(maxProfit(prices));
+//        System.out.println(maxProfit(prices));
+        System.out.println(maxProfit3(prices));
     }
 
 
@@ -72,5 +73,51 @@ public class s121 {
 //        return dp[n - 1][0];
 //
 //    }
+
+    public static int maxProfit3(int[] prices) {
+        int n = prices.length;
+        int[][][] dp = new int[n][2][2];
+        int min_sha = Integer.MIN_VALUE/2;
+
+        dp[0][0][0] = 0;
+        dp[0][0][1] = -prices[0];
+        dp[0][1][0] = min_sha;
+        dp[0][1][1] = min_sha;
+
+        for (int i = 1; i < n; i++) {
+//            dp[i][0][0] = 0;
+            dp[i][0][1] = Math.max(dp[i-1][0][1], -prices[i]);
+            dp[i][1][0] = Math.max(dp[i-1][1][0], dp[i-1][0][1]+prices[i]);
+//            dp[i][1][1] = min_sha;
+
+        }
+
+        return Math.max(dp[n-1][1][0], 0);
+
+    }
+
+
+    public static int maxProfit4(int[] prices) {
+        int n = prices.length;
+        int min_sha = Integer.MIN_VALUE/2;
+
+//        int dp00 = 0;
+        int dp01 = -prices[0];
+        int dp10 = min_sha;
+//        int dp11 = min_sha;
+
+        for (int i = 1; i < n; i++) {
+//            dp[i][0][0] = 0;
+            dp10 = Math.max(dp10, dp01+prices[i]);
+            dp01 = Math.max(dp01, -prices[i]);
+
+//            dp[i][1][1] = min_sha;
+
+        }
+
+        return Math.max(dp10,0);
+
+    }
+
 
 }
