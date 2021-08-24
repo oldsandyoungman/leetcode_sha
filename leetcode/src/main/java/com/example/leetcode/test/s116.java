@@ -1,10 +1,28 @@
 package com.example.leetcode.test;
 
 import com.example.leetcode.bean_sha.Node;
+import com.example.leetcode.bean_sha.TreeNode;
 
 public class s116 {
 
     public static void main(String[] args) {
+        Node a = new Node(1);
+        Node b = new Node(2);
+        Node c = new Node(3);
+        Node d = new Node(4);
+        Node e = new Node(5);
+        Node f = new Node(6);
+        Node g = new Node(7);
+
+        a.left = b;
+        a.right = c;
+        b.left = d;
+        b.right = e;
+        c.left = f;
+        c.right = g;
+
+        System.out.println(connect(a));
+
 
     }
 
@@ -21,7 +39,7 @@ public class s116 {
 //    初始状态下，所有 next 指针都被设置为 NULL。
 //
 
-    public static Node connect(Node root) {
+    public static Node connect2(Node root) {
 
         if(root==null || root.left==null){
             return root;
@@ -51,5 +69,29 @@ public class s116 {
 
 
     }
+
+
+
+
+    public static Node connect(Node root) {
+        if (root==null) {
+            return null;
+        }
+
+        connect(root.left);
+        connect(root.right);
+
+        Node l = root.left;
+        Node r = root.right;
+        while (l!=null) {
+            l.next = r;
+            l = l.right;
+            r = r.left;
+        }
+
+        return root;
+
+    }
+
 
 }
