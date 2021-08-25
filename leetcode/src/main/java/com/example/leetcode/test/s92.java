@@ -30,88 +30,110 @@ public class s92 {
 //    给你单链表的头指针 head 和两个整数 left 和 right ，其中 left <= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
 
 
+//    public static ListNode reverseBetween(ListNode head, int left, int right) {
+//
+//        if(left==1){
+//
+//            return reverseK(head,right);
+//
+//        }else {
+//            head.next = reverseBetween(head.next, left-1, right-1);
+//            return head;
+//        }
+//
+//    }
+//
+//    public static ListNode reverseK(ListNode head, int k) {
+//
+//        if(head==null || k==0){
+//            return head;
+//        }
+//
+//        ListNode pre = null;
+//        ListNode cur = head;
+//        ListNode nxt = head;
+//
+//        for (int i = 0; i < k; i++) {
+//            nxt = cur.next;
+//            cur.next = pre;
+//            pre = cur;
+//            cur = nxt;
+//        }
+//
+//        head.next = cur;
+//        return pre;
+//
+//    }
+//
+//    public static ListNode reverseBetween2(ListNode head, int left, int right) {
+//
+//        left--;
+//        right--;
+//
+//        if (head==null){
+//            return null;
+//        }
+//
+//        ListNode cur = head;
+//        ListNode nxt;
+//        ListNode pre = null;
+//        ListNode sup = null;
+//
+//        for (int i = 0; i < left; i++) {
+//            if(sup==null){
+//                sup = head;
+//            }else {
+//                sup = cur;
+//            }
+//            cur = cur.next;
+//        }
+//
+//        nxt = cur;
+//
+//        for (int i = 0; i < right - left+1; i++) {
+//            nxt = cur.next;
+//
+//            cur.next = pre;
+//
+//            pre = cur;
+//            cur = nxt;
+//
+//        }
+//
+//        if(sup==null){
+//            sup = head;
+//            sup.next = cur;
+//            return pre;
+//        }
+//
+//        sup.next.next = cur;
+//        sup.next = pre;
+//
+//        return head;
+//
+//
+//    }
+
+    public static ListNode suc;
     public static ListNode reverseBetween(ListNode head, int left, int right) {
-
-        if(left==1){
-
-            return reverseK(head,right);
-
-        }else {
+        if (left>1) {
             head.next = reverseBetween(head.next, left-1, right-1);
             return head;
         }
 
-    }
-
-    public static ListNode reverseK(ListNode head, int k) {
-
-        if(head==null || k==0){
+        if (right==1) {
+            suc = head.next;
             return head;
         }
 
-        ListNode pre = null;
-        ListNode cur = head;
-        ListNode nxt = head;
+        ListNode last = reverseBetween(head.next, 1, right-1);
+        head.next.next = head;
+        head.next = suc;
 
-        for (int i = 0; i < k; i++) {
-            nxt = cur.next;
-            cur.next = pre;
-            pre = cur;
-            cur = nxt;
-        }
-
-        head.next = cur;
-        return pre;
+        return last;
 
     }
 
-    public static ListNode reverseBetween2(ListNode head, int left, int right) {
 
-        left--;
-        right--;
-
-        if (head==null){
-            return null;
-        }
-
-        ListNode cur = head;
-        ListNode nxt;
-        ListNode pre = null;
-        ListNode sup = null;
-
-        for (int i = 0; i < left; i++) {
-            if(sup==null){
-                sup = head;
-            }else {
-                sup = cur;
-            }
-            cur = cur.next;
-        }
-
-        nxt = cur;
-
-        for (int i = 0; i < right - left+1; i++) {
-            nxt = cur.next;
-
-            cur.next = pre;
-
-            pre = cur;
-            cur = nxt;
-
-        }
-
-        if(sup==null){
-            sup = head;
-            sup.next = cur;
-            return pre;
-        }
-
-        sup.next.next = cur;
-        sup.next = pre;
-
-        return head;
-
-
-    }
 
 }
