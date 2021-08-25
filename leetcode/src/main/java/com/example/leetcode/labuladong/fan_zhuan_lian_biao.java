@@ -24,7 +24,7 @@ public class fan_zhuan_lian_biao {
     }
 
     /**
-     * 翻转整个链表
+     * 迭代法翻转整个链表
      * @param head 链表头
      * @return 链表头
      */
@@ -44,7 +44,11 @@ public class fan_zhuan_lian_biao {
 
     }
 
-
+    /**
+     * 递归法翻转整个链表
+     * @param head 链表头
+     * @return 链表头
+     */
     public static ListNode reverse2(ListNode head) {
         if (head==null || head.next==null) {
             return head;
@@ -58,10 +62,8 @@ public class fan_zhuan_lian_biao {
 
     }
 
-
+    // 递归法将链表的前 n 个节点反转（n <= 链表长度）
     public static ListNode successor = null; // 后驱节点
-
-    // 将链表的前 n 个节点反转（n <= 链表长度）
     public static ListNode reverseN(ListNode head, int n){
         if (n==1) {
             successor = head.next;
@@ -78,7 +80,7 @@ public class fan_zhuan_lian_biao {
 
 
     /**
-     * 翻转部分节点
+     * 递归法翻转部分节点
      * @param head 头结点
      * @param m 开始（索引从1开始）
      * @param n 结束（索引从1开始）
@@ -100,6 +102,57 @@ public class fan_zhuan_lian_biao {
         head.next.next = head;
         head.next = successor;
         return last;
+    }
+
+    /**
+     * 迭达法翻转[a,b)之间的链表
+     * @param a 左端
+     * @param b 右端
+     * @return 返回新的头结点
+     */
+    public static ListNode reverse_a_b(ListNode a, ListNode b) {
+        ListNode pre = null;
+        ListNode cur = a;
+        ListNode nxt;
+
+        while (cur!=b) {
+            nxt = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = nxt;
+        }
+
+        return pre;
+
+    }
+
+
+    /**
+     * k个一组迭达法翻转链表
+     * @param head 头节点
+     * @param k k个一组
+     * @return 返回新的头节点
+     */
+    public static ListNode reverseKGroup(ListNode head, int k) {
+        if (head==null) {
+            return null;
+        }
+
+        ListNode b = head;
+
+        for (int i = 0; i < k; i++) {
+            if (b==null) {
+                return head;
+            }
+            b = b.next;
+        }
+
+        ListNode newhead = reverse_a_b(head, b);
+        
+        head.next = reverseKGroup(b,k);
+        
+        return newhead;
+        
     }
 
 }
