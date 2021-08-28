@@ -2,29 +2,21 @@ package com.example.leetcode.test;
 
 import com.example.leetcode.bean_sha.TreeNode;
 
-public class s538 {
+public class s1038 {
 
     public static void main(String[] args) {
-
-        TreeNode a = new TreeNode(5);
-        TreeNode b = new TreeNode(3);
-        TreeNode c = new TreeNode(6);
-        TreeNode d = new TreeNode(4);
-//        TreeNode e = new TreeNode(5);
+        TreeNode a = new TreeNode(1);
+        TreeNode b = new TreeNode(2);
+        TreeNode c = new TreeNode(3);
 
         a.left = b;
         a.right = c;
-        b.right = d;
-//        c.left = d;
-//        c.right = e;
 
-        convertBST(a);
-
-        System.out.println();
+        System.out.println(bstToGst(a));
 
     }
 
-//    给出二叉 搜索 树的根节点，该树的节点值各不相同，请你将其转换为累加树（Greater Sum Tree），使每个节点 node 的新值等于原树中大于或等于 node.val 的值之和。
+//    给定一个二叉搜索树，请将它的每个节点的值替换成树中大于或者等于该节点值的所有节点值之和。
 //
 //    提醒一下，二叉搜索树满足下列约束条件：
 //
@@ -33,22 +25,17 @@ public class s538 {
 //    左右子树也必须是二叉搜索树。
 //
 //    来源：力扣（LeetCode）
-//    链接：https://leetcode-cn.com/problems/convert-bst-to-greater-tree
+//    链接：https://leetcode-cn.com/problems/binary-search-tree-to-greater-sum-tree
 //    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
-
-    public static int sum = 0;
-
-    public static TreeNode convertBST(TreeNode root) {
-
+    public static TreeNode bstToGst(TreeNode root) {
         traverse(root);
-
         return root;
-
     }
 
-    public static void traverse(TreeNode root){
+    public static int sum;
 
+    public static void traverse(TreeNode root){
         if (root==null) {
             return;
         }
@@ -61,7 +48,6 @@ public class s538 {
         traverse(root.left);
 
     }
-
 
 
 }
