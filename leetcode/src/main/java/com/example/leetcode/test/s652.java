@@ -5,6 +5,7 @@ import com.example.leetcode.bean_sha.TreeNode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class s652 {
     public static void main(String[] args) {
@@ -15,36 +16,68 @@ public class s652 {
 //
 //    两棵树重复是指它们具有相同的结构以及相同的结点值。
 
-    public HashMap<String, Integer> map = new HashMap<>();
-    public List<TreeNode> list = new ArrayList<>();
+//    public HashMap<String, Integer> map = new HashMap<>();
+//    public List<TreeNode> list = new ArrayList<>();
+//
+//    public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
+//
+//        traverse(root);
+//        return list;
+//
+//    }
+//
+//    public String traverse(TreeNode root){
+//
+//        if(root==null){
+//            return "#";
+//        }
+//
+//        String left = traverse(root.left);
+//        String right = traverse(root.right);
+//
+//        String result = left + "," + right + "," + root.val;
+//        int fre = map.getOrDefault(result,0);
+//
+//        if (fre==1) {
+//            list.add(root);
+//        }
+//
+//        map.put(result, fre+1);
+//
+//        return result;
+//
+//    }
+
 
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
 
         traverse(root);
-        return list;
+        return res;
 
     }
 
-    public String traverse(TreeNode root){
 
-        if(root==null){
+    public static Map<String, Integer> memo = new HashMap<>();
+    public static List<TreeNode> res = new ArrayList<>();
+
+    public static String traverse(TreeNode root){
+        if (root==null) {
             return "#";
         }
 
         String left = traverse(root.left);
         String right = traverse(root.right);
 
-        String result = left + "," + right + "," + root.val;
-        int fre = map.getOrDefault(result,0);
+        String temp = left + ',' + root.val + ',' + right;
 
-        if (fre==1) {
-            list.add(root);
+        int fre = memo.get(temp);
+
+        if (fre == 1){
+            res.add(root);
         }
-
-        map.put(result, fre+1);
-
-        return result;
-
+        memo.put(temp,fre+1);
+        return temp;
     }
+
 
 }
