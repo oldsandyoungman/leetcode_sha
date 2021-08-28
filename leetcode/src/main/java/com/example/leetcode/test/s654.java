@@ -62,4 +62,32 @@ public class s654 {
         return res;
     }
 
+
+    public TreeNode constructMaximumBinaryTree2(int[] nums) {
+        return traverse(nums, 0, nums.length-1);
+    }
+
+
+
+    public static TreeNode traverse(int[] num, int lo, int hi){
+        if (hi<lo) {
+            return null;
+        }
+
+        int max_sha = -1;
+        int index_max = 0;
+        for (int i = lo; i <= hi; i++) {
+            if (num[i]>max_sha) {
+                max_sha = num[i];
+                index_max = i;
+            }
+        }
+
+        TreeNode root = new TreeNode(num[index_max]);
+        root.left = traverse(num, lo, index_max-1);
+        root.right = traverse(num, index_max+1, hi);
+        return root;
+    }
+
+
 }

@@ -39,5 +39,30 @@ public class s105 {
         return root;
     }
 
+    public TreeNode buildTree2(int[] preorder, int[] inorder) {
+
+        return traverse(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1);
+
+    }
+
+    public static TreeNode traverse(int[] preorder, int prelo, int prehi, int[] inorder, int inolo, int inohi){
+        if (prelo>prehi) {
+            return null;
+        }
+        int index = inolo;
+        while (inorder[index]!=preorder[prelo]){
+            index++;
+        }
+
+        int len = index - inolo;
+
+        TreeNode root = new TreeNode(preorder[prelo]);
+        root.left = traverse(preorder,prelo+1, prelo+len, inorder, inolo, index-1);
+        root.right = traverse(preorder, prelo+len+1, prehi, inorder, index+1, inohi);
+        return root;
+    }
+
+
+
 
 }
