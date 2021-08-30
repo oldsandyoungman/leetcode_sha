@@ -2,7 +2,9 @@ package com.example.leetcode.test;
 
 import com.example.leetcode.bean_sha.TreeNode;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class s297 {
@@ -18,10 +20,24 @@ public class s297 {
         b.right = d;
 //        c.left = d;
 //        c.right = e;
-        String aa = serialize(a);
+
+//        String aa = serialize(a);
+//        System.out.println(aa);
+//        TreeNode res = deserialize(aa);
+//        System.out.println("done");
+
+//        String aa = serialize2(a);
+//        System.out.println(aa);
+//        TreeNode res = deserialize2(aa);
+//        System.out.println(res);
+//        System.out.println("done");
+
+        String aa = serialize3(a);
         System.out.println(aa);
-        TreeNode res = deserialize(aa);
+        TreeNode res = deserialize3(aa);
+        System.out.println(res);
         System.out.println("done");
+
 
     }
 
@@ -194,7 +210,7 @@ public class s297 {
 
         }
 
-        return '[' + sb.substring(0,sb.length()-1).toString() + ']';
+        return '[' + sb.substring(0,sb.length()-1) + ']';
 
     }
 
@@ -221,8 +237,10 @@ public class s297 {
             String left = nodes[i++];
 
             if(left.equals(NULL)){
+                assert parent != null;
                 parent.left = null;
             }else {
+                assert parent != null;
                 parent.left = new TreeNode(Integer.parseInt(left));
                 q.offer(parent.left);
             }
@@ -278,6 +296,125 @@ public class s297 {
 
 
     }
+
+
+
+
+    public static StringBuilder sb = new StringBuilder();
+
+    public static String serialize2(TreeNode root) {
+        traverse2(root);
+        return sb.toString();
+
+    }
+
+    public static void traverse2(TreeNode root){
+        if (root==null) {
+            sb.append('#').append(',');
+            return;
+        }
+
+        sb.append(root.val).append(',');
+
+        traverse2(root.left);
+        traverse2(root.right);
+
+    }
+
+    public static TreeNode deserialize2(String data) {
+        LinkedList<String> res = new LinkedList<>();
+        for (String s : data.split(",")) {
+            res.addLast(s);
+        }
+        return deserialize2(res);
+    }
+
+    private static TreeNode deserialize2(LinkedList<String> res) {
+        if (res.size()==0){
+            return null;
+        }
+        String cur = res.removeFirst();
+        if ("#".equals(cur)){
+            return null;
+        }
+        TreeNode curnode = new TreeNode(Integer.parseInt(cur));
+        curnode.left = deserialize2(res);
+        curnode.right = deserialize2(res);
+        return curnode;
+    }
+
+
+
+
+    public static String serialize3(TreeNode root) {
+        if (root==null){
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        sb.append(root.val).append(',');
+
+        while (!q.isEmpty()) {
+            int n = q.size();
+            for (int i = 0; i < n; i++) {
+                TreeNode cur = q.poll();
+
+                assert cur != null;
+                if (cur.left!=null) {
+                    q.offer(cur.left);
+                    sb.append(cur.left.val).append(',');
+                }else {
+                    sb.append('#').append(',');
+                }
+                if (cur.right!=null) {
+                    q.offer(cur.right);
+                    sb.append(cur.right.val).append(',');
+                }else {
+                    sb.append('#').append(',');
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+
+    public static TreeNode deserialize3(String data) {
+        if (data==null) {
+            return null;
+        }
+        LinkedList<String> res = new LinkedList<>();
+        for (String s : data.split(",")) {
+            res.addLast(s);
+        }
+        TreeNode root = new TreeNode(Integer.parseInt(res.removeFirst()));
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+
+        while (!res.isEmpty()){
+            TreeNode parent = q.poll();
+            String left = res.removeFirst();
+            if (!"#".equals(left)) {
+                assert parent != null;
+                parent.left = new TreeNode(Integer.parseInt(left));
+                q.offer(parent.left);
+            }else {
+                assert parent != null;
+                parent.left = null;
+            }
+            String right = res.removeFirst();
+            if (!"#".equals(right)) {
+                parent.right = new TreeNode(Integer.parseInt(right));
+                q.offer(parent.right);
+            }else {
+                parent.right = null;
+            }
+        }
+
+        return root;
+
+    }
+
 
 
 
