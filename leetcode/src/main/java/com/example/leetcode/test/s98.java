@@ -56,5 +56,23 @@ public class s98 {
         return traverse(root.left, min, root.val) && traverse(root.right, root.val, max);
     }
 
+    public static boolean traverse2(TreeNode root, Integer min, Integer max){
+        if (root==null) {
+            return true;
+        }
+        if (min!=null){
+            if (root.val<min){
+                return false;
+            }
+        }
+        if (max!=null){
+            if (root.val>max){
+                return false;
+            }
+        }
+        return traverse2(root.left, min, root.val) && traverse2(root.right, root.val, max);
+
+    }
+
 
 }
