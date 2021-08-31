@@ -18,14 +18,17 @@ public class s222 {
 
         a.left = b;
         a.right = c;
-//        b.left = d;
-//        b.right = e;
+        b.left = d;
+        b.right = e;
 //        c.left = f;
 //        c.right = g;
 
-//        System.out.println(countNodes(a));
+        System.out.println(Math.pow(2,3)-1);
 
-        System.out.println(1<<2);
+//        System.out.println(countNodes(a));
+        System.out.println(countNodes2(a));
+
+//        System.out.println(1<<2);
     }
 
 //    给你一棵 完全二叉树 的根节点 root ，求出该树的节点个数。
@@ -95,6 +98,37 @@ public class s222 {
 //
 //
 //    }
+
+
+    public static int countNodes2(TreeNode root) {
+        if (root==null){
+            return 0;
+        }
+        int lh = 0;
+        int rh = 0;
+        TreeNode left = root;
+        TreeNode right = root;
+        while (left.left!=null) {
+            lh++;
+            left = left.left;
+        }
+        while (right.right!=null){
+            rh++;
+            right = right.right;
+        }
+
+        if (lh==rh) {
+            return (int) (Math.pow(2,lh+1)-1);
+        }
+
+        return 1 + countNodes2(root.left) + countNodes2(root.right);
+
+
+    }
+
+
+
+
 
 
 }
