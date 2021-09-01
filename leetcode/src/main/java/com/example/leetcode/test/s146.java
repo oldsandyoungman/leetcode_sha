@@ -1,5 +1,7 @@
 package com.example.leetcode.test;
 
+import java.security.Key;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class s146 {
@@ -77,3 +79,137 @@ class LRUCache {
  * int param_1 = obj.get(key);
  * obj.put(key,value);
  */
+
+
+
+
+
+
+class Node_sha{
+
+    int key;
+    int val;
+    Node_sha pre;
+    Node_sha next;
+    Node_sha(){}
+    Node_sha(int key, int val){
+        this.key = key;
+        this.val = val;
+    }
+
+}
+
+
+class doublelist_sha{
+    Node_sha head;
+    Node_sha tail;
+    int size;
+
+    doublelist_sha(){
+        head = new Node_sha();
+        tail = new Node_sha();
+        head.next = tail;
+        tail.pre = head;
+        size = 0;
+    }
+
+    void addLast(Node_sha x){
+        x.next = tail;
+        x.pre = tail.pre;
+        x.pre.next = x;
+        tail.pre = x;
+        size++;
+    }
+
+    void remove(Node_sha x){
+        x.pre.next = x.next;
+        x.next.pre = x.pre;
+        size--;
+    }
+
+    Node_sha removeFirst(){
+        if (size>0){
+            Node_sha res = head.next;
+//            head.next.next.pre = head;
+//            head.next = head.next.next;
+//            size--;
+            remove(res);
+            return res;
+        }
+        return null;
+    }
+
+    public int size(){
+        return this.size;
+    }
+
+}
+
+class LRUCache2 {
+    doublelist_sha cache = new doublelist_sha();
+    HashMap<Integer, Node_sha> map = new HashMap<>();
+    int cap;
+
+    LRUCache2(int capacity){
+        this.cap = capacity;
+    }
+
+    public int get(int key) {
+        if (!map.containsKey(key)) {
+            return -1;
+        }
+        Node_sha curnode = map.get(key);
+        makeRecent(key);
+        return curnode.val;
+
+    }
+
+
+
+    public void put(int key, int value) {
+        if (map.containsKey(key)){
+//            Node_sha curnode = map.get(key);
+//            curnode.val = value;
+//            makeRecent(key);
+            deleteKey(key);
+            addRecent(key, value);
+
+            return;
+        }
+
+        if (cap == map.size()){
+            Node_sha first = cache.removeFirst();
+            int key1 = first.key;
+            map.remove(key1);
+        }
+
+//        Node_sha curnode = new Node_sha(key, value);
+//        map.put(key, curnode);
+//        cache.addLast(curnode);
+
+        addRecent(key, value);
+
+
+    }
+
+    private void makeRecent(int key) {
+        Node_sha curnode = map.get(key);
+        cache.remove(curnode);
+        cache.addLast(curnode);
+
+    }
+
+    private void addRecent(int key, int val){
+        Node_sha curnode = new Node_sha(key, val);
+        map.put(key, curnode);
+        cache.addLast(curnode);
+    }
+
+    public void deleteKey(int key){
+        Node_sha curnode = map.get(key);
+        cache.remove(curnode);
+        map.remove(key);
+    }
+
+}
+
