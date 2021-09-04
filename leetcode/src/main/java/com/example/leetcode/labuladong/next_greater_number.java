@@ -48,6 +48,8 @@ public class next_greater_number {
         return res;
 
 
+
+
     }
 
 
