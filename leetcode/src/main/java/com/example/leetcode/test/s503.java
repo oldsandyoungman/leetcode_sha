@@ -3,6 +3,7 @@ package com.example.leetcode.test;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 public class s503 {
 
@@ -38,6 +39,8 @@ public class s503 {
         return res;
 
     }
+
+
 
 
 }
