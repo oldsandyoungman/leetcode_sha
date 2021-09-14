@@ -36,43 +36,70 @@ public class s142 {
 //    为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。注意，pos 仅仅是用于标识环的情况，并不会作为参数传递到函数中。
 
 
+//    public static ListNode detectCycle(ListNode head) {
+//
+//        ListNode fast = head;
+//        ListNode slow = head;
+//        boolean flag = false;
+//
+//        while (fast!=null && fast.next!=null){
+//
+//            slow = slow.next;
+//            fast = fast.next.next;
+//
+//            if(fast==slow){
+//                flag = true;
+//                break;
+//            }
+//        }
+//
+//        if(flag){
+//
+//            slow = head;
+//
+//            while (fast!=slow){
+//                slow = slow.next;
+//                fast = fast.next;
+//            }
+//
+//            return fast;
+//
+//
+//        }else {
+//            return null;
+//        }
+//
+//
+//
+//    }
+
     public static ListNode detectCycle(ListNode head) {
 
-        ListNode fast = head;
         ListNode slow = head;
-        boolean flag = false;
+        ListNode fast = head;
 
         while (fast!=null && fast.next!=null){
-
             slow = slow.next;
             fast = fast.next.next;
-
-            if(fast==slow){
-                flag = true;
+            if (slow==fast) {
                 break;
             }
+
         }
 
-        if(flag){
-
-            slow = head;
-
-            while (fast!=slow){
-                slow = slow.next;
-                fast = fast.next;
-            }
-
-            return fast;
-
-
-        }else {
+        if (fast==null || fast.next==null){
             return null;
         }
 
+        slow = head;
+        while (slow!=fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        return slow;
 
 
     }
-
-
 
 }
