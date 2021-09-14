@@ -147,10 +147,76 @@ public class s567 {
 //    }
 
 
+//    public static boolean checkInclusion(String s1, String s2) {
+//        if (s1.length()>s2.length()) {
+//            return false;
+//        }
+//
+//        HashMap<Character, Integer> need = new HashMap<>();
+//
+//        char[] s1_chars = s1.toCharArray();
+//
+//        for (char s1_char : s1_chars) {
+//            need.put(s1_char, need.getOrDefault(s1_char, 0)+1);
+//        }
+//
+//        HashMap<Character, Integer> window = new HashMap<>();
+//
+//        int left = 0;
+//        int right = 0;
+//        int res_l = 0;
+//        int res_r = 0;
+//        int valid = 0;
+//
+//        for (int i = 0; i < s1.length(); i++) {
+//            char tmp = s2.charAt(right);
+//            if (need.containsKey(tmp)) {
+//                window.put(tmp, window.getOrDefault(tmp, 0)+1);
+//                if (window.get(tmp).equals(need.get(tmp))) {
+//                    valid++;
+//                }
+//            }
+//            right++;
+//        }
+//        if (valid==need.size()) {
+//            return true;
+//        }
+//
+//
+//        while (right<s2.length()) {
+//            char tmp = s2.charAt(right);
+//            if (need.containsKey(tmp)) {
+//                window.put(tmp, window.getOrDefault(tmp, 0)+1);
+//                if (window.get(tmp).equals(need.get(tmp))) {
+//                    valid++;
+//                }
+//            }
+//
+//            right++;
+//
+//            tmp = s2.charAt(left);
+//            if (need.containsKey(tmp)) {
+//                window.put(tmp, window.getOrDefault(tmp, 0)-1);
+//                if (window.get(tmp).equals(need.get(tmp)-1)) {
+//                    valid--;
+//                }
+//            }
+//
+//            left++;
+//
+//
+//            if (valid==need.size()) {
+//                return true;
+//            }
+//
+//        }
+//
+//        return false;
+//
+//
+//    }
+
     public static boolean checkInclusion(String s1, String s2) {
-        if (s1.length()>s2.length()) {
-            return false;
-        }
 
         HashMap<Character, Integer> need = new HashMap<>();
 
@@ -164,54 +230,37 @@ public class s567 {
 
         int left = 0;
         int right = 0;
-        int res_l = 0;
-        int res_r = 0;
         int valid = 0;
 
-        for (int i = 0; i < s1.length(); i++) {
-            char tmp = s2.charAt(right);
-            if (need.containsKey(tmp)) {
-                window.put(tmp, window.getOrDefault(tmp, 0)+1);
-                if (window.get(tmp).equals(need.get(tmp))) {
-                    valid++;
-                }
-            }
-            right++;
-        }
-        if (valid==need.size()) {
-            return true;
-        }
-
-
         while (right<s2.length()) {
+
             char tmp = s2.charAt(right);
             if (need.containsKey(tmp)) {
                 window.put(tmp, window.getOrDefault(tmp, 0)+1);
-                if (window.get(tmp).equals(need.get(tmp))) {
+                if (need.get(tmp).equals(window.get(tmp))) {
                     valid++;
                 }
             }
 
             right++;
 
-            tmp = s2.charAt(left);
-            if (need.containsKey(tmp)) {
-                window.put(tmp, window.getOrDefault(tmp, 0)-1);
-                if (window.get(tmp).equals(need.get(tmp)-1)) {
-                    valid--;
+            while (valid==need.size()) {
+                if (right-left == s1.length()){
+                    return true;
                 }
-            }
-
-            left++;
-
-
-            if (valid==need.size()) {
-                return true;
+                tmp = s2.charAt(left);
+                if (need.containsKey(tmp)) {
+                    if (need.get(tmp).equals(window.get(tmp))) {
+                        valid--;
+                    }
+                    window.put(tmp, window.getOrDefault(tmp, 0)-1);
+                }
+                left++;
             }
 
         }
-
         return false;
+
 
 
     }
