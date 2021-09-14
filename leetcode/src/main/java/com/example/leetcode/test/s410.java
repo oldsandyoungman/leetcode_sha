@@ -99,9 +99,14 @@ public class s410 {
 
         while (left<=right) {
             int mid = left + (right-left)/2;
-            if (f(nums, mid)<m) {
-                right = mid - 1;
-            } else if (f(nums, mid)>m) {
+//            if (f(nums, mid)<m) {
+//                right = mid - 1;
+//            } else if (f(nums, mid)>m) {
+//                left = mid + 1;
+//            }else {
+//                right = mid - 1;
+//            }
+            if (f(nums, mid)>m) {
                 left = mid + 1;
             }else {
                 right = mid - 1;
