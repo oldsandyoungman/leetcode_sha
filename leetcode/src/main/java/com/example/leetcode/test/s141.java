@@ -37,22 +37,39 @@ public class s141 {
 //    如果链表中存在环，则返回 true 。 否则，返回 false 。
 
 
+//    public static boolean hasCycle(ListNode head) {
+//
+//        ListNode fast = head;
+//        ListNode slow = head;
+//
+//        while (fast!=null && fast.next!=null){
+//
+//            slow = slow.next;
+//            fast = fast.next.next;
+//
+//            if(fast==slow){
+//                return true;
+//            }
+//        }
+//        return false;
+//
+//    }
+
+
     public static boolean hasCycle(ListNode head) {
 
-        ListNode fast = head;
         ListNode slow = head;
+        ListNode fast = head;
 
         while (fast!=null && fast.next!=null){
-
             slow = slow.next;
             fast = fast.next.next;
-
-            if(fast==slow){
+            if (slow==fast){
                 return true;
             }
+
         }
         return false;
-
     }
 
 
