@@ -31,13 +31,26 @@ public class s876 {
 //
 //    如果有两个中间结点，则返回第二个中间结点。
 
+//    public static ListNode middleNode(ListNode head) {
+//        ListNode slow = head;
+//        ListNode fast = head;
+//
+//        while (fast!=null &&fast.next!= null){
+//            fast = fast.next.next;
+//            slow = slow.next;
+//        }
+//
+//        return slow;
+//
+//    }
+
     public static ListNode middleNode(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;
 
-        while (fast!=null &&fast.next!= null){
-            fast = fast.next.next;
+        while (fast!=null && fast.next!= null) {
             slow = slow.next;
+            fast = fast.next.next;
         }
 
         return slow;
