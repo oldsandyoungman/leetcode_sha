@@ -14,7 +14,7 @@ public class s76 {
 //        String t = "A";
         String t = "AA";
 
-        System.out.println(minWindow(a,t));
+        System.out.println(minWindow(a, t));
 
     }
 
@@ -63,67 +63,120 @@ public class s76 {
 //        }
 
 
+//    public static String minWindow(String s, String t) {
+//
+//        Map<Character, Integer> need = new HashMap<>();
+//        Map<Character, Integer> window = new HashMap<>();
+//
+//        char[] t_char = t.toCharArray();
+//        for (char c : t_char) {
+//            need.put(c,need.getOrDefault(c,0)+1);
+//        }
+//
+//        int left = 0;
+//        int right = 0;
+//        int valid = 0;
+//        int min = s.length()+1;
+//        int res_l = 0;
+//        int res_r = s.length()-1;
+//
+//        while (right<s.length()){
+//
+//            char r = s.charAt(right);
+//
+//            if (need.containsKey(r)) {
+//                window.put(r,window.getOrDefault(r,0)+1);
+//
+//                if (window.get(r).equals(need.get(r))){
+//                    valid++;
+//                }
+//            }
+//
+//
+//            right++;
+//
+//            while (valid==need.size()) {
+//
+//                if (right-left<min) {
+//                    min = right-left;
+//                    res_l = left;
+//                    res_r = right;
+//                }
+//
+//                char l = s.charAt(left);
+//
+//                if (need.containsKey(l)) {
+//                    window.put(l,window.get(l)-1);
+//                    if (window.get(l)==need.get(l)-1) {
+//                        valid--;
+//                    }
+//                }
+//
+//                left++;
+//            }
+//
+//        }
+//
+//        if (min==s.length()+1){
+//            return "";
+//        }else {
+//            return s.substring(res_l, res_r);
+//        }
+//
+//    }
 
 
     public static String minWindow(String s, String t) {
-
-        Map<Character, Integer> need = new HashMap<>();
-        Map<Character, Integer> window = new HashMap<>();
-
-        char[] t_char = t.toCharArray();
-        for (char c : t_char) {
-            need.put(c,need.getOrDefault(c,0)+1);
+        HashMap<Character, Integer> need = new HashMap<>();
+        char[] t_chars = t.toCharArray();
+        for (char t_char : t_chars) {
+            need.put(t_char, need.getOrDefault(t_char, 0)+1);
         }
 
+        HashMap<Character, Integer> window = new HashMap<>();
+//        char[] s_chars = s.toCharArray();
         int left = 0;
         int right = 0;
         int valid = 0;
-        int min = s.length()+1;
-        int res_l = 0;
-        int res_r = s.length()-1;
+        int fin_l = 0;
+        int fin_r = 0;
+        int fin_len = s.length()+1;
 
-        while (right<s.length()){
+        while (left<=right && right<s.length()) {
+//            char tmp = s_chars[right];
+            char tmp = s.charAt(right);
 
-            char r = s.charAt(right);
-
-            if (need.containsKey(r)) {
-                window.put(r,window.getOrDefault(r,0)+1);
-
-                if (window.get(r).equals(need.get(r))){
+            if (need.containsKey(tmp)) {
+                window.put(tmp, window.getOrDefault(tmp, 0)+1);
+                if (window.get(tmp).equals(need.get(tmp))) {
                     valid++;
                 }
             }
 
-
             right++;
 
-            while (valid==need.size()) {
-
-                if (right-left<min) {
-                    min = right-left;
-                    res_l = left;
-                    res_r = right;
+            while (valid>=need.size()){
+                int now_len = right - left;
+                if (now_len<fin_len) {
+                    fin_len = now_len;
+                    fin_l = left;
+                    fin_r = right;
                 }
 
-                char l = s.charAt(left);
+//                tmp = s_chars[left];
+                tmp = s.charAt(left);
 
-                if (need.containsKey(l)) {
-                    window.put(l,window.get(l)-1);
-                    if (window.get(l)==need.get(l)-1) {
+                if (need.containsKey(tmp)) {
+                    window.put(tmp, window.get(tmp)-1);
+                    if (window.get(tmp).equals(need.get(tmp)-1)) {
                         valid--;
                     }
                 }
-
                 left++;
             }
-
         }
 
-        if (min==s.length()+1){
-            return "";
-        }else {
-            return s.substring(res_l, res_r);
-        }
+        return s.substring(fin_l, fin_r);
 
     }
 
