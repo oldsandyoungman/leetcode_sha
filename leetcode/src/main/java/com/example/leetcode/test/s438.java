@@ -29,67 +29,129 @@ public class s438 {
 //    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 
+//    public static List<Integer> findAnagrams(String s, String p) {
+//        List<Integer> res = new ArrayList<>();
+//        if (s.length()<p.length()){
+//            return res;
+//        }
+//
+//        Map<Character, Integer> need = new HashMap<>();
+//        Map<Character, Integer> window = new HashMap<>();
+//
+//        char[] p_array = p.toCharArray();
+//        for (char c : p_array) {
+//            need.put(c,need.getOrDefault(c,0)+1);
+//        }
+//
+//        int left = 0;
+//        int right = 0;
+//        int valid = 0;
+//
+//        while (right < p.length()) {
+//            char r = s.charAt(right);
+//            if (need.containsKey(r)) {
+//                window.put(r,window.getOrDefault(r,0)+1);
+//                if (window.get(r).equals(need.get(r))) {
+//                    valid++;
+//                }
+//            }
+//            right++;
+//        }
+//
+//        if (valid==need.size()) {
+////            if (!s.substring(0,right).equals(p)){
+////                res.add(0);
+////            }
+//            res.add(0);
+//        }
+//
+//        while (right<s.length()){
+//
+//            char r = s.charAt(right);
+//            if (need.containsKey(r)) {
+//                window.put(r,window.getOrDefault(r,0)+1);
+//                if (window.get(r).equals(need.get(r))) {
+//                    valid++;
+//                }
+//            }
+//            right++;
+//
+//            char l = s.charAt(left);
+//            if (need.containsKey(l)) {
+//                window.put(l,window.get(l)-1);
+//                if (window.get(l).equals(need.get(l)-1)) {
+//                    valid--;
+//                }
+//            }
+//            left++;
+//
+//            if (valid==need.size()){
+////                if (!s.substring(left,right).equals(p)){
+////                    res.add(left);
+////                }
+//                res.add(left);
+//            }
+//
+//        }
+//
+//        return res;
+//
+//
+//
+//
+//    }
+
+
     public static List<Integer> findAnagrams(String s, String p) {
+
         List<Integer> res = new ArrayList<>();
-        if (s.length()<p.length()){
-            return res;
-        }
 
         Map<Character, Integer> need = new HashMap<>();
-        Map<Character, Integer> window = new HashMap<>();
 
-        char[] p_array = p.toCharArray();
-        for (char c : p_array) {
-            need.put(c,need.getOrDefault(c,0)+1);
+
+        char[] p_chars = p.toCharArray();
+
+        for (char p_char : p_chars) {
+            need.put(p_char, need.getOrDefault(p_char, 0)+1);
         }
 
+        Map<Character, Integer> window = new HashMap<>();
         int left = 0;
         int right = 0;
         int valid = 0;
 
-        while (right < p.length()) {
-            char r = s.charAt(right);
-            if (need.containsKey(r)) {
-                window.put(r,window.getOrDefault(r,0)+1);
-                if (window.get(r).equals(need.get(r))) {
+        while (right<s.length()) {
+
+            char tmp = s.charAt(right);
+
+            if (need.containsKey(tmp)) {
+                window.put(tmp, window.getOrDefault(tmp, 0)+1);
+                if (window.get(tmp).equals(need.get(tmp))) {
                     valid++;
                 }
             }
-            right++;
-        }
 
-        if (valid==need.size()) {
-//            if (!s.substring(0,right).equals(p)){
-//                res.add(0);
-//            }
-            res.add(0);
-        }
-
-        while (right<s.length()){
-
-            char r = s.charAt(right);
-            if (need.containsKey(r)) {
-                window.put(r,window.getOrDefault(r,0)+1);
-                if (window.get(r).equals(need.get(r))) {
-                    valid++;
-                }
-            }
             right++;
 
-            char l = s.charAt(left);
-            if (need.containsKey(l)) {
-                window.put(l,window.get(l)-1);
-                if (window.get(l).equals(need.get(l)-1)) {
-                    valid--;
-                }
-            }
-            left++;
 
-            if (valid==need.size()){
-//                if (!s.substring(left,right).equals(p)){
-//                    res.add(left);
-//                }
-                res.add(left);
+            while (valid==need.size()) {
+
+                if (right-left == p.length()) {
+                    res.add(left);
+                }
+
+
+                tmp = s.charAt(left);
+
+                if (need.containsKey(tmp)) {
+                    window.put(tmp, window.getOrDefault(tmp, 0)-1);
+                    if (window.get(tmp).equals(need.get(tmp)-1)) {
+                        valid--;
+                    }
+                }
+
+                left++;
+
             }
 
         }
@@ -97,9 +159,8 @@ public class s438 {
         return res;
 
 
-
-
     }
+
 
 
 
