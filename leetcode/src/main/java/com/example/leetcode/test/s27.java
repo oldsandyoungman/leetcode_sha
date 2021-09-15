@@ -18,20 +18,35 @@ public class s27 {
 //    元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。
 
 
+//    public static int removeElement(int[] nums, int val) {
+//        int slow = 0;
+//        int fast = 0;
+//
+//        while (fast<nums.length){
+//            if(nums[fast]!=val){
+//                nums[slow] = nums[fast];
+//                slow++;
+//            }
+//            fast++;
+//        }
+//
+//        return slow;
+//
+//    }
+
+
     public static int removeElement(int[] nums, int val) {
         int slow = 0;
         int fast = 0;
 
         while (fast<nums.length){
-            if(nums[fast]!=val){
-                nums[slow] = nums[fast];
+            if (nums[fast]!=val){
+                nums[slow]=nums[fast];
                 slow++;
             }
             fast++;
         }
-
         return slow;
-
     }
 
 
