@@ -1,6 +1,7 @@
 package com.example.leetcode.test;
 
 import com.example.leetcode.bean_sha.ListNode;
+import sun.awt.LightweightFrame;
 
 public class s83 {
 
@@ -33,7 +34,7 @@ public class s83 {
 //
 //    返回同样按升序排列的结果链表。
 
-    public static ListNode deleteDuplicates(ListNode head) {
+    public static ListNode deleteDuplicates3(ListNode head) {
 
         if(head == null){
             return null;
@@ -71,6 +72,27 @@ public class s83 {
             fast = fast.next;
         }
         slow.next = null;
+        return head;
+    }
+
+
+    public static ListNode deleteDuplicates(ListNode head) {
+        if (head==null) {
+            return null;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast!=null){
+            if (slow.val!=fast.val) {
+                slow.next = fast;
+                slow = slow.next;
+            }
+            fast = fast.next;
+        }
+
+        slow.next = null;
+
         return head;
     }
 }
