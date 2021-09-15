@@ -18,28 +18,46 @@ public class s26 {
 //
 //    不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
 
-    public static int removeDuplicates(int[] nums) {
+//    public static int removeDuplicates(int[] nums) {
+//
+//        if(nums.length==0){
+//            return 0;
+//        }
+//
+//        int slow = 0;
+//        int fast = 0;
+//
+//        while (fast<nums.length){
+//
+//            if (nums[fast]!=nums[slow]) {
+//                slow++;
+//                nums[slow] = nums[fast];
+//            }
+//            fast++;
+//
+//        }
+//
+//        return slow+1;
+//
+//
+//    }
 
+
+    public static int removeDuplicates(int[] nums) {
         if(nums.length==0){
             return 0;
         }
-
         int slow = 0;
         int fast = 0;
 
         while (fast<nums.length){
-
-            if (nums[fast]!=nums[slow]) {
-                slow++;
+            if (nums[slow]!=nums[fast]) {
                 nums[slow] = nums[fast];
+                slow++;
             }
             fast++;
-
         }
-
         return slow+1;
-
-
     }
 
 }
