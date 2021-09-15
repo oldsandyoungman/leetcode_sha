@@ -6,7 +6,8 @@ public class s316 {
 
     public static void main(String[] args) {
 
-        String a = "bcabc";
+//        String a = "bcabc";
+        String a = "cbacdcbc";
 
         System.out.println(removeDuplicateLetters(a));
 
@@ -15,7 +16,7 @@ public class s316 {
 
 //    给你一个字符串 s ，请你去除字符串中重复的字母，使得每个字母只出现一次。需保证 返回结果的字典序最小（要求不能打乱其他字符的相对位置）
 
-    public static String removeDuplicateLetters(String s) {
+    public static String removeDuplicateLetters2(String s) {
 //        int[] count_sha = new int[256];
 //        boolean[] exist_sha = new boolean[256];
 //        Stack<Character> stack = new Stack<>();
@@ -66,6 +67,44 @@ public class s316 {
 //
 //
         return "";
+
+    }
+
+    public static String removeDuplicateLetters(String s) {
+        boolean[] exist = new boolean[256];
+        int[] count = new int[256];
+        Stack<Character> stk = new Stack<>();
+
+
+        char[] chars = s.toCharArray();
+        for (char aChar : chars) {
+            count[aChar]++;
+        }
+
+
+
+        for (char aChar : chars) {
+            count[aChar]--;
+            if (exist[aChar]) {
+                continue;
+            }
+            while (!stk.empty() && stk.peek()>aChar){
+                if (count[stk.peek()]==0) {
+                    break;
+                }
+                exist[stk.pop()] = false;
+            }
+            exist[aChar] = true;
+            stk.push(aChar);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (!stk.empty()) {
+            sb.append(stk.pop());
+        }
+
+        return sb.reverse().toString();
+
 
     }
 
