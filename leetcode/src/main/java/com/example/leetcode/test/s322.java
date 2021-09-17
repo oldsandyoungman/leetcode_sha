@@ -7,9 +7,9 @@ public class s322 {
 
     public static void main(String[] args) {
 //        int[] coins = {1,2,5};
-        int[] coins = {2};
+        int[] coins = {2147483647};
 //        int[] coins = {1};
-        System.out.println(coinChange(coins, 3));
+        System.out.println(coinChange(coins, 2));
     }
 
 //    给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
@@ -165,22 +165,138 @@ public class s322 {
 //    }
 
 
+//    public static int coinChange(int[] coins, int amount) {
+//        int[] dp = new int[amount+1];
+//        Arrays.fill(dp, amount+1);
+//        dp[0] = 0;
+//
+//        for (int i = 1; i < amount+1; i++) {
+//            int min = amount+1;
+//            for (int coin : coins) {
+//                if (i>=coin) {
+//                    min = Math.min(min, dp[i-coin]+1);
+//                }
+//            }
+//            dp[i] = min;
+//        }
+//        return (dp[amount]==amount+1)?-1:dp[amount];
+//
+//    }
+
+
+
+
+
+
+
+
+////    备忘录方法
+////    如果是-1，代表之前没算过
+////    如果是10001，代表无法凑出来
+////    其它就是可以凑出来，数字即为最小硬币数量
+//    public static int[] memo;
+//    public static int coinChange(int[] coins, int amount) {
+//        memo = new int[amount+1];
+//        Arrays.fill(memo, -1);
+//        memo[0] = 0;
+//        traverse(coins, amount);
+//        if (memo[amount]>10000) {
+//            return -1;
+//        }else {
+//            return memo[amount];
+//        }
+//
+//    }
+//    public static int traverse(int[] coins, int amount){
+////        printspace(count_n++);
+////        System.out.print("amount:" + amount + '\n');
+//
+//        if (amount==0){
+//            return 0;
+//        }
+//        if (memo[amount]!=-1){
+////            printspace(--count_n);
+////            System.out.print("return:" + memo[amount] + '\n');
+//            return memo[amount];
+//        }
+//        int res = 10001;
+//        for (int coin : coins) {
+//            if (coin>amount){
+//                continue;
+//            }
+//            res = Math.min(res, 1+traverse(coins, amount-coin));
+//        }
+//        if (res>10000) {
+//            memo[amount] = 10001;
+////            printspace(--count_n);
+////            System.out.print("return:" + "10001" + '\n');
+//            return 10001;
+//        }
+//        memo[amount] = res;
+////        printspace(--count_n);
+////        System.out.print("return:" + res + '\n');
+//        return res;
+//    }
+
+
+////    dp table法(自己写的)
+//    public static int coinChange(int[] coins, int amount) {
+//        if (amount==0){
+//            return 0;
+//        }
+//        int[] dp = new int[amount+1];
+//        Arrays.fill(dp, amount+1);
+//        dp[0] = 0;
+//        for (int i = 0; i < amount; i++) {
+//            for (int coin : coins) {
+//                if (i+coin<=amount && i+coin>0){
+//                    dp[i+coin] = Math.min(dp[i+coin], dp[i]+1);
+//                }
+//            }
+//        }
+//        if (dp[amount]==amount+1) {
+//            return -1;
+//        }
+//        return dp[amount];
+//    }
+
+    //    dp table法(官方思路)
     public static int coinChange(int[] coins, int amount) {
         int[] dp = new int[amount+1];
         Arrays.fill(dp, amount+1);
         dp[0] = 0;
-
-        for (int i = 1; i < amount+1; i++) {
-            int min = amount+1;
+        for (int i = 0; i <= amount; i++) {
             for (int coin : coins) {
                 if (i>=coin) {
-                    min = Math.min(min, dp[i-coin]+1);
+                    dp[i] = Math.min(dp[i], 1+dp[i-coin]);
                 }
             }
-            dp[i] = min;
         }
-        return (dp[amount]==amount+1)?-1:dp[amount];
-
+        if (dp[amount]==amount+1) {
+            return -1;
+        }
+        return dp[amount];
     }
+
+
+
+
+
+
+
+
+
+
+    public static int count_n = 0;
+
+    public static void printspace(int n){
+        for (int i = 0; i < n; i++) {
+            System.out.print("  ");
+        }
+    }
+
+
+
+
 
 }
