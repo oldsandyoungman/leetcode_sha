@@ -1,5 +1,7 @@
 package com.example.leetcode.test;
 
+import java.util.HashMap;
+
 public class s494 {
 
     public static void main(String[] args) {
@@ -28,19 +30,19 @@ public class s494 {
 //    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 
-
-    public static int findTargetSumWays(int[] nums, int target) {
-        int sum = 0;
-        for (int num : nums) {
-            sum += num;
-        }
-
-        int fin = sum + Math.abs(target);
-        if (fin%2==1 || sum<target) {
-            return 0;
-        }
-        return subsets(nums, fin/2);
-    }
+//    // dp table 方法
+//    public static int findTargetSumWays(int[] nums, int target) {
+//        int sum = 0;
+//        for (int num : nums) {
+//            sum += num;
+//        }
+//
+//        int fin = sum + Math.abs(target);
+//        if (fin%2==1 || sum<target) {
+//            return 0;
+//        }
+//        return subsets(nums, fin/2);
+//    }
 
 //    private static int subsets(int[] nums, int fin) {
 //        int sz = nums.length;
@@ -66,6 +68,18 @@ public class s494 {
 //    }
 
     // 降维
+    public static int findTargetSumWays(int[] nums, int target) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+
+        int fin = sum + Math.abs(target);
+        if (fin%2==1 || sum<target) {
+            return 0;
+        }
+        return subsets(nums, fin/2);
+    }
     private static int subsets(int[] nums, int fin) {
         int sz = nums.length;
         int[] dp = new int[fin+1];
@@ -83,6 +97,39 @@ public class s494 {
         }
         return dp[fin];
     }
+
+
+//    // 备忘录法（回溯）
+//    public static int findTargetSumWays(int[] nums, int target) {
+//        int n = nums.length;
+//        if (n==0) {
+//            return 0;
+//        }
+//        return dp(nums, target, 0);
+//    }
+//
+//    public static HashMap<String, Integer> memo = new HashMap<>();
+//
+//    public static int dp(int[] nums, int rest, int i){
+//        if (i==nums.length) {
+//            if (rest==0) {
+//                return 1;
+//            }
+//            return 0;
+//        }
+//        String s = i+","+rest;
+//        if (memo.containsKey(s)) {
+//            return memo.get(s);
+//        }
+//
+//        int sum1 = dp(nums, rest-nums[i], i+1);
+//        int sum2 = dp(nums, rest+nums[i], i+1);
+//
+//        int sum = sum1+sum2;
+//        memo.put(s, sum);
+//        return sum;
+//    }
+
 
 
 
