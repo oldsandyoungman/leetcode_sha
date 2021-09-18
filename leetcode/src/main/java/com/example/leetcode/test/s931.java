@@ -1,9 +1,12 @@
 package com.example.leetcode.test;
 
+import java.util.Arrays;
+
 public class s931 {
 
     public static void main(String[] args) {
-
+        int[][] s = {{2,1,3},{6,5,4},{7,8,9}};
+        System.out.println(minFallingPathSum(s));
     }
 
 
@@ -16,42 +19,170 @@ public class s931 {
 //    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 
+//    public static int minFallingPathSum(int[][] matrix) {
+//        int n = matrix.length;
+//        memo = new int[n][n];
+//        for (int i = 0; i < n; i++) {
+//            for (int j = 0; j < n; j++) {
+//                memo[i][j] = 66666;
+//            }
+//        }
+//        int res = Integer.MAX_VALUE;
+//        for (int i = 0; i < n; i++) {
+//            res = Math.min(res, dp_sha(matrix, n-1, i));
+//        }
+//
+//        return res;
+//
+//    }
+//
+//    public static int[][] memo;
+//
+//    private static int dp_sha(int[][] matrix, int i, int j) {
+//        if (i<0 || j<0 || j>=matrix[0].length) {
+//            return Integer.MAX_VALUE;
+//        }
+//        if (i==0) {
+////            memo[i][j] = matrix[i][j];
+//            return matrix[i][j];
+//        }
+//        if (memo[i][j]!=66666){
+//            return memo[i][j];
+//        }
+//        memo[i][j] = matrix[i][j] + min_sha(dp_sha(matrix,i-1,j), dp_sha(matrix,i-1,j-1), dp_sha(matrix,i-1,j+1));
+//        return memo[i][j];
+//    }
+//
+//    private static int min_sha(int i, int j, int k) {
+//        return Math.min(i,Math.min(j,k));
+//    }
+
+
+
+
+//    //    备忘录方法
+//    public static int minFallingPathSum(int[][] matrix) {
+//
+//        int m = matrix.length;
+//        int n = matrix[0].length;
+//
+//        memo = new int[m][n];
+//
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                memo[i][j] = 10001;
+//            }
+//        }
+//
+//        int res = 10001;
+//        for (int i = 0; i < n; i++) {
+//            res = Math.min(res, traverse(matrix, m-1, i));
+//        }
+//        return res;
+//
+//    }
+//    public static int[][] memo;
+//    public static int traverse(int[][] matrix, int i, int j){
+//
+//        printspace(count_n++);
+//        System.out.print("i="+i+",j="+j+'\n');
+//
+//
+//        if (j<0 || j>=matrix[0].length) {
+//            printspace(--count_n);
+//            System.out.print("res=10001"+'\n');
+//            return 10001;
+//        }
+//        if (i==0){
+//            printspace(--count_n);
+//            System.out.print("res="+matrix[0][j]+'\n');
+//            return matrix[0][j];
+//        }
+//        if (memo[i][j]!=10001) {
+//            printspace(--count_n);
+//            System.out.print("res="+memo[i][j]+'\n');
+//            return memo[i][j];
+//        }
+//        int res = 10001;
+//        for (int k = j-1; k <= j+1; k++) {
+//            res = Math.min(res, traverse(matrix, i-1, k));
+//        }
+//
+//        res += matrix[i][j];
+//        memo[i][j] = res;
+//
+//        printspace(--count_n);
+//        System.out.print("res="+res+'\n');
+//
+//        return res;
+//
+//    }
+
+
+
+
+    //    dp table方法
     public static int minFallingPathSum(int[][] matrix) {
-        int n = matrix.length;
-        memo = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                memo[i][j] = 66666;
+
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        if (n==1) {
+            int s = 0;
+            for (int[] ints : matrix) {
+                s += ints[0];
             }
+            return s;
         }
-        int res = Integer.MAX_VALUE;
+
+        int[][] dp = new int[m][n];
+
+        System.arraycopy(matrix[0], 0, dp[0], 0, n);
+
+        for (int i = 1; i < m; i++) {
+
+            dp[i][0] = Math.min(dp[i-1][0], dp[i-1][1]) + matrix[i][0];
+
+            for (int j = 1; j < n-1; j++) {
+
+                dp[i][j] = Math.min(dp[i-1][j-1], Math.min(dp[i-1][j], dp[i-1][j+1])) + matrix[i][j];
+
+            }
+
+            dp[i][n-1] = Math.min(dp[i-1][n-1], dp[i-1][n-2]) + matrix[i][n-1];
+
+        }
+
+        int res = 10001;
         for (int i = 0; i < n; i++) {
-            res = Math.min(res, dp_sha(matrix, n-1, i));
+            res = Math.min(res, dp[m-1][i]);
         }
 
         return res;
-        
+
     }
 
-    public static int[][] memo;
 
-    private static int dp_sha(int[][] matrix, int i, int j) {
-        if (i<0 || j<0 || j>=matrix[0].length) {
-            return Integer.MAX_VALUE;
+
+
+
+
+
+
+
+
+
+
+
+    public static int count_n = 0;
+
+    public static void printspace(int n){
+        for (int i = 0; i < n; i++) {
+            System.out.print("  ");
         }
-        if (i==0) {
-//            memo[i][j] = matrix[i][j];
-            return matrix[i][j];
-        }
-        if (memo[i][j]!=66666){
-            return memo[i][j];
-        }
-        memo[i][j] = matrix[i][j] + min_sha(dp_sha(matrix,i-1,j), dp_sha(matrix,i-1,j-1), dp_sha(matrix,i-1,j+1));
-        return memo[i][j];
     }
 
-    private static int min_sha(int i, int j, int k) {
-        return Math.min(i,Math.min(j,k));
-    }
+
+
 
 }
