@@ -17,8 +17,8 @@ public class s300 {
 //    链接：https://leetcode-cn.com/problems/longest-increasing-subsequence
 //    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
-
-    public static int lengthOfLIS(int[] nums) {
+    // dp table法
+    public static int lengthOfLIS2(int[] nums) {
         int n = nums.length;
         int[] dp = new int[n];
 
@@ -50,6 +50,69 @@ public class s300 {
         }
 
         return res_max;
+
+    }
+
+    // patience game纸牌游戏法
+    public static int lengthOfLIS(int[] nums) {
+//        int n = nums.length;
+//        int[] tops = new int[n];
+//        int piles = -1;
+//
+//        for (int i = 0; i < n; i++) {
+//            int target = nums[i];
+//            int left = 0;
+//            int right = piles;
+//            while (left<=right){
+//                int mid = left + (right - left)/2;
+////                if (tops[mid] < target) {
+////                    left = mid + 1;
+////                } else if (tops[mid] > target) {
+////                    right = mid - 1;
+////                }else {
+////                    right = mid - 1;
+////                }
+//                if (tops[mid] < target) {
+//                    left = mid + 1;
+//                } else {
+//                    right = mid - 1;
+//                }
+//            }
+//            if ( left>piles) {
+//                piles++;
+//            }
+//            tops[left] = target;
+//        }
+//
+//        return piles+1;
+
+        int n = nums.length;
+        int[] tops = new int[n];
+        int piles = 0;
+
+        for (int target : nums) {
+            int left = 0;
+            int right = piles - 1;
+
+            while (left <= right) {
+                int mid = left + (right - left) / 2;
+                if (tops[mid] < target) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+
+            if (left >= piles) {
+                tops[left] = target;
+                piles++;
+            } else {
+                tops[left] = target;
+            }
+
+        }
+
+        return piles;
 
     }
 

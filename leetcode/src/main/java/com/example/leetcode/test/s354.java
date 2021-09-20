@@ -26,58 +26,100 @@ public class s354 {
 //    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 
-    public static int maxEnvelopes(int[][] envelopes) {
+//    public static int maxEnvelopes(int[][] envelopes) {
+//
+//        Arrays.sort(envelopes, new Comparator<int[]>() {
+//            @Override
+//            public int compare(int[] o1, int[] o2) {
+//                return o1[0]==o2[0]?o2[1]-o1[1]:o1[0]-o2[0];
+//            }
+//        });
+//
+//        int[] heights = new int[envelopes.length];
+//
+//        for (int i = 0; i < heights.length; i++) {
+//            heights[i] = envelopes[i][1];
+//        }
+//
+//        return lis_sha(heights);
+//
+//
+//    }
+//
+//    private static int lis_sha(int[] heights) {
+//        int[] top = new int[heights.length];
+//        int piles = 0;
+//
+//        for (int i = 0; i < heights.length; i++) {
+//
+//
+//            int left = 0;
+//            int right = piles-1;
+//
+//            while (left<=right){
+//                int mid = left + (right-left)/2;
+//                if (top[mid]<heights[i]) {
+//                    left = mid + 1;
+//                } else if (top[mid]>heights[i]) {
+//                    right = mid -1;
+//                } else if (top[mid]==heights[i]) {
+//                    right = mid -1;
+//                }
+//            }
+//
+//            if (left==piles) {
+//                piles++;
+//            }
+//            top[left] = heights[i];
+//
+//
+//        }
+//
+//        return piles;
+//
+//    }
 
-        Arrays.sort(envelopes, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[0]==o2[0]?o2[1]-o1[1]:o1[0]-o2[0];
+
+    public static int maxEnvelopes(int[][] envelopes) {
+        Arrays.sort(envelopes, (o1, o2) -> {
+            if (o1[0]==o2[0]){
+                return o2[1]-o1[1];
+            }else {
+                return o1[0] - o2[0];
             }
         });
 
-        int[] heights = new int[envelopes.length];
+        int n = envelopes.length;
 
-        for (int i = 0; i < heights.length; i++) {
-            heights[i] = envelopes[i][1];
-        }
-
-        return lis_sha(heights);
-
-
-    }
-
-    private static int lis_sha(int[] heights) {
-        int[] top = new int[heights.length];
+        int[] tops = new int[n];
         int piles = 0;
 
-        for (int i = 0; i < heights.length; i++) {
-
-
+        for (int[] envelope : envelopes) {
+            int target = envelope[1];
             int left = 0;
-            int right = piles-1;
+            int right = piles - 1;
 
-            while (left<=right){
-                int mid = left + (right-left)/2;
-                if (top[mid]<heights[i]) {
+            while (left <= right) {
+                int mid = left + (right - left) / 2;
+                if (tops[mid] < target) {
                     left = mid + 1;
-                } else if (top[mid]>heights[i]) {
-                    right = mid -1;
-                } else if (top[mid]==heights[i]) {
-                    right = mid -1;
+                } else {
+                    right = mid - 1;
                 }
             }
 
-            if (left==piles) {
+            if (left == piles) {
                 piles++;
             }
-            top[left] = heights[i];
-
+            tops[left] = target;
 
         }
 
         return piles;
 
     }
+
+
 
 
 }
