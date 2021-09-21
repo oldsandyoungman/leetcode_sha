@@ -6,9 +6,13 @@ public class s1143 {
 
     public static void main(String[] args) {
 //        String s1 = "ace";
-        String s1 = "abcba";
+//        String s1 = "abcba";
+        String s1 = "leetcode";
 //        String s2 = "abcde";
-        String s2 = "abcbcba";
+//        String s2 = "abcbcba";
+        String s2 = "etco";
+
+
 
 
 
