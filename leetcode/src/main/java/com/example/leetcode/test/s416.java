@@ -9,6 +9,8 @@ public class s416 {
         int[] nums = {1,5,10,6};
 //        System.out.println(canPartition2(nums));
         System.out.println(canPartition(nums));
+        System.out.println(canPartition3(nums));
+        System.out.println(canPartition4(nums));
 
     }
 
@@ -95,6 +97,71 @@ public class s416 {
 
         return dp[goal];
 
+
+    }
+
+
+    // dp table 法
+    public static boolean canPartition3(int[] nums) {
+        int n = nums.length;
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if (sum%2==1){
+            return false;
+        }
+        int target = sum/2;
+
+        boolean[][] dp = new boolean[n+1][target+1];
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = true;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= target; j++) {
+                if (j<nums[i-1]) {
+                    dp[i][j] = dp[i-1][j];
+                }else {
+                    dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i-1]];
+                }
+
+            }
+        }
+
+        return dp[n][target];
+
+    }
+
+    // 降维
+    public static boolean canPartition4(int[] nums) {
+        int n = nums.length;
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if (sum%2==1){
+            return false;
+        }
+        int target = sum/2;
+
+        boolean[] dp = new boolean[target+1];
+        for (int i = 0; i <= n; i++) {
+            dp[0] = true;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = target; j >= 1; j--) {
+                if (j<nums[i-1]) {
+                    dp[j] = dp[j];
+                }else {
+                    dp[j] = dp[j] || dp[j-nums[i-1]];
+                }
+
+            }
+        }
+
+        return dp[target];
 
     }
 
