@@ -265,7 +265,23 @@ public class s887 {
 
 
 
+    // 换了定义的 dp table 方法(二分搜索法优化，好像优化不了)
+    public static int superEggDrop2(int k, int n) {
+        int[][] dp = new int[k+1][n+1];
 
+        int m = 0;
+
+        while (dp[k][m]<n){
+            m++;
+            for (int i = 1; i <= m; i++) {
+                dp[k][i] = dp[k-1][i-1] + dp[k][n-i];
+            }
+
+        }
+
+        return 0;
+
+    }
 
 
 
