@@ -9,6 +9,7 @@ public class s188 {
 //        int[] prices = {2,4,1};
         int[] prices = {3,2,6,5,0,3};
         System.out.println(maxProfit(k, prices));
+        System.out.println(maxProfit8(k, prices));
 //        System.out.println(maxProfit_k_2(prices));
     }
 
@@ -112,5 +113,82 @@ public class s188 {
 //        return Math.max(Math.max(dp[n-1][2][0], dp[n-1][1][0]), 0);
 //
 //    }
+
+
+
+
+    // 最完整版
+    public static int maxProfit8(int k, int[] prices) {
+        int n = prices.length;
+        if (prices.length==0 || k==0){
+            return 0;
+        }
+        // dp[i][j]:
+        // i: 第i天结束
+        // j: 是否持有股票（0：不持有）
+        // k: 还有几次交易机会
+
+        if (k>n/2) {
+            return maxProfit_wu_xian(prices);
+        }
+
+        int[][][] dp = new int[n][2][k+1];
+
+        // base case
+        int min_sha = Integer.MIN_VALUE/2;
+        for (int i = 0; i <= k; i++) {
+            dp[0][0][i] = min_sha;
+            dp[0][1][i] = min_sha;
+        }
+        dp[0][1][k-1] = -prices[0];
+        dp[0][0][k] = 0;
+
+        for (int i = 1; i < n; i++) {
+
+            for (int j = 0; j < k; j++) {
+
+                dp[i][0][j] = Math.max(dp[i-1][0][j],dp[i-1][1][j]+prices[i]);
+                dp[i][1][j] = Math.max(dp[i-1][1][j], dp[i-1][0][j+1]-prices[i]);
+
+            }
+
+        }
+
+        int res = 0;
+        for (int i = 0; i < k; i++) {
+            res = Math.max(res, dp[n-1][0][i]);
+        }
+        return res;
+
+    }
+
+    // 没有次数限制
+    public static int maxProfit_wu_xian(int[] prices) {
+        int n = prices.length;
+        // dp[i][j]:
+        // i: 第i天结束
+        // j: 是否持有股票（0：不持有）
+        // k: 还有几次交易机会
+
+        // 本质上只需要2个变量空间存储
+        // dp1: 持有股票
+        // dp0: 未持有股票
+        // base case
+        int dp1 = -prices[0];
+        int dp0 = 0;
+
+        for (int i = 1; i < n; i++) {
+            int temp = dp0;
+            dp0 = Math.max(dp0,dp1+prices[i]);
+//            dp[i][0][1] = 0;
+            dp1 = Math.max(dp1, temp-prices[i]);
+//            dp[i][1][1] = -10001;
+        }
+
+        return Math.max(dp0, 0);
+
+    }
+
+
 
 }

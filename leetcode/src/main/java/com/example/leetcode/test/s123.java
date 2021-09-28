@@ -17,6 +17,8 @@ public class s123 {
 //        System.out.println(maxProfit5(prices));
 //        System.out.println(maxProfit6(prices));
         System.out.println(maxProfit7(prices));
+        System.out.println(maxProfit8(prices));
+        System.out.println(maxProfit9(prices));
 //        System.out.println(maxProfit(prices));
 //        System.out.println(Integer.MIN_VALUE/2);
     }
@@ -221,4 +223,91 @@ public class s123 {
         return Math.max(Math.max(dp020, dp010), 0);
 
     }
+
+
+
+
+
+    // 最完整版
+    public static int maxProfit8(int[] prices) {
+        int n = prices.length;
+        // dp[i][j]:
+        // i: 第i天结束
+        // j: 是否持有股票（0：不持有）
+        // k: 还有几次交易机会
+        int[][][] dp = new int[n][2][3];
+
+        // base case
+        dp[0][1][0] = -10001;
+        dp[0][1][1] = -prices[0];
+        dp[0][1][2] = -10001;
+        dp[0][0][0] = -10001;
+        dp[0][0][1] = -10001;
+        dp[0][0][2] = 0;
+
+        for (int i = 1; i < n; i++) {
+            dp[i][0][0] = Math.max(dp[i-1][0][0],dp[i-1][1][0]+prices[i]);
+            dp[i][0][1] = Math.max(dp[i-1][0][1],dp[i-1][1][1]+prices[i]);
+//            dp[i][0][2] = 0;
+
+            dp[i][1][0] = Math.max(dp[i-1][1][0], dp[i-1][0][1]-prices[i]);
+            dp[i][1][1] = Math.max(dp[i-1][1][1], dp[i-1][0][2]-prices[i]);
+//            dp[i][1][2] = -10001;
+
+        }
+
+        return Math.max(dp[n-1][0][0], Math.max(dp[n-1][0][1],0));
+
+    }
+
+    // 压缩空间版
+    public static int maxProfit9(int[] prices) {
+        int n = prices.length;
+        // dp[i][j]:
+        // i: 第i天结束
+        // j: 是否持有股票（0：不持有）
+        // k: 还有几次交易机会
+
+        // 本质上只需要6个变量空间存储
+        // dp10: 持有股票+没有购买机会
+        // dp11: 持有股票+有1次购买机会
+        // dp12: 持有股票+有2次购买机会
+        // dp00: 未持有股票+没有购买机会
+        // dp01: 未持有股票+有1次购买机会
+        // dp02: 未持有股票+有2次购买机会
+
+        // base case
+        int dp10 = -10001;
+        int dp11 = -prices[0];
+        int dp12 = -10001;
+        int dp00 = -10001;
+        int dp01 = -10001;
+        int dp02 = 0;
+
+        for (int i = 1; i < n; i++) {
+
+            int temp = dp01;
+
+            dp00 = Math.max(dp00,dp10+prices[i]);
+            dp01 = Math.max(dp01,dp11+prices[i]);
+//            dp[i][0][2] = 0;
+
+            dp10 = Math.max(dp10, temp-prices[i]);
+            dp11 = Math.max(dp11, dp02-prices[i]);
+//            dp12 = -10001;
+        }
+
+        return Math.max(dp00, Math.max(dp01,0));
+
+    }
+
+
+
+
+
+
+
+
+
+
 }
