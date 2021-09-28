@@ -178,35 +178,5 @@ public class s121 {
 
     }
 
-    // 压缩空间版plus
-    public static int maxProfit7(int[] prices) {
-        int n = prices.length;
-        // dp[i][j]:
-        // i: 第i天结束
-        // j: 是否持有股票（0：不持有）
-        // k: 还有几次交易机会
-
-        // 本质上只需要4个变量空间存储
-        // dp10: 持有股票+没有购买机会
-        // dp11: 持有股票+有购买机会
-        // dp00: 未持有股票+没有购买机会
-        // dp01: 未持有股票+有购买机会
-        // base case
-        int dp10 = -prices[0];
-        int dp11 = -10001;
-        int dp00 = -10001;
-        int dp01 = 0;
-
-        for (int i = 1; i < n; i++) {
-            dp00 = Math.max(dp00,dp10+prices[i]);
-//            dp[i][0][1] = 0;
-            dp10 = Math.max(dp10, dp01-prices[i]);
-//            dp[i][1][1] = -10001;
-        }
-
-        return Math.max(dp00, dp01);
-
-    }
-
 
 }
