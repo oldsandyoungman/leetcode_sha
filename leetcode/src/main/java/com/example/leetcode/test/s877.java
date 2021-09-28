@@ -4,8 +4,10 @@ public class s877 {
 
     public static void main(String[] args) {
 //        int[] piles = new int[]{5,3,4,5};
-        int[] piles = new int[]{3,7,2,3};
+//        int[] piles = new int[]{3,7,2,3};
+        int[] piles = new int[]{3,9,1,2};
         System.out.println(stoneGame(piles));
+        System.out.println(stoneGame2(piles));
     }
 
 //    亚历克斯和李用几堆石子在做游戏。偶数堆石子排成一行，每堆都有正整数颗石子 piles[i] 。
@@ -22,6 +24,9 @@ public class s877 {
 //    链接：https://leetcode-cn.com/problems/stone-game
 //    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
+
+
+//    // dp table 方法
     public static boolean stoneGame(int[] piles) {
         int n = piles.length;
         pair_sha[][] dp = new pair_sha[n][n];
@@ -68,6 +73,91 @@ public class s877 {
         return dp[0][n-1].fir-dp[0][n-1].sec>0;
 
     }
+
+//    // dp table 方法 + 降维
+    public static boolean stoneGame2(int[] piles) {
+        int n = piles.length;
+        pair_sha[] dp = new pair_sha[n];
+
+        for (int i = 0; i < n; i++) {
+            dp[i] = new pair_sha(piles[i],0);
+        }
+
+        for (int i = n-2; i >= 0; i--) {
+            for (int j = i+1; j < n; j++) {
+
+                // 下面注释的是错误解法
+//                dp[i][j].fir = Math.max(
+//                        dp[i+1][j].sec + piles[i],
+//                        dp[i][j-1].sec + piles[j]
+//                );
+//                dp[i][j].sec = Math.max(
+//                        dp[i+1][j].fir,
+//                        dp[i][j-1].fir
+//                );
+
+                int left = dp[j].sec + piles[i];
+                int right = dp[j-1].sec + piles[j];
+                if (left>right){
+                    dp[j].sec = dp[j].fir;
+                    dp[j].fir = left;
+
+                }else {
+                    dp[j].fir = right;
+                    dp[j].sec = dp[j-1].fir;
+                }
+
+            }
+        }
+
+//        System.out.println(dp[n-1].fir-dp[n-1].sec);
+
+        return dp[n-1].fir-dp[n-1].sec>0;
+
+    }
+
+
+    //    // dp table 方法 + 降维 + 不用元组(耗时比用元组高一点)
+    public static boolean stoneGame3(int[] piles) {
+        int n = piles.length;
+        int[][] dp = new int[n][2];
+
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = piles[i];
+        }
+
+        for (int i = n-2; i >= 0; i--) {
+            for (int j = i+1; j < n; j++) {
+
+                // 下面注释的是错误解法
+//                dp[i][j].fir = Math.max(
+//                        dp[i+1][j].sec + piles[i],
+//                        dp[i][j-1].sec + piles[j]
+//                );
+//                dp[i][j].sec = Math.max(
+//                        dp[i+1][j].fir,
+//                        dp[i][j-1].fir
+//                );
+
+                int left = dp[j][1] + piles[i];
+                int right = dp[j-1][1] + piles[j];
+                if (left>right){
+                    dp[j][1] = dp[j][0];
+                    dp[j][0] = left;
+                }else {
+                    dp[j][0] = right;
+                    dp[j][1] = dp[j-1][0];
+                }
+
+            }
+        }
+
+//        System.out.println(dp[n-1].fir-dp[n-1].sec);
+
+        return dp[n-1][0]-dp[n-1][1]>0;
+
+    }
+
 
 }
 
