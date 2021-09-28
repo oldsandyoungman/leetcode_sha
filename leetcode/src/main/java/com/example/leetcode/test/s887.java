@@ -8,7 +8,8 @@ public class s887 {
         int k = 2;
         int n = 6;
 
-        System.out.println(superEggDrop(k,n));
+//        System.out.println(superEggDrop(k,n));
+        System.out.println(superEggDrop2(k,n));
     }
 
 //    给你 k 枚相同的鸡蛋，并可以使用一栋从第 1 层到第 n 层共有 n 层楼的建筑。
@@ -265,21 +266,24 @@ public class s887 {
 
 
 
-    // 换了定义的 dp table 方法(二分搜索法优化，好像优化不了)
+    // 换了定义的 dp table 方法(二分搜索法可以优化，暂时不想了233)
     public static int superEggDrop2(int k, int n) {
+        // dp[k][m]: k个鸡蛋，扔m次，最多能扫几层楼
         int[][] dp = new int[k+1][n+1];
+
+        // dp[0][m] = 0
+        // dp[k][0] = 0
 
         int m = 0;
 
         while (dp[k][m]<n){
             m++;
-            for (int i = 1; i <= m; i++) {
-                dp[k][i] = dp[k-1][i-1] + dp[k][n-i];
+            for (int i = 1; i <= k; i++) {
+                dp[i][m] = dp[i-1][m-1] + dp[i][m-1] + 1;
             }
-
         }
 
-        return 0;
+        return m;
 
     }
 
