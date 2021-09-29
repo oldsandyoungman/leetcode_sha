@@ -7,9 +7,13 @@ import java.util.List;
 public class s46 {
 
     public static void main(String[] args) {
-        int[] nums = {1};
+        int[] nums = {1,2,3};
         List<List<Integer>> list = permute(nums);
+        List<List<Integer>> list2 = permute2(nums);
         for (List<Integer> integers : list) {
+            System.out.println(integers);
+        }
+        for (List<Integer> integers : list2) {
             System.out.println(integers);
         }
     }
@@ -38,6 +42,32 @@ public class s46 {
                 track.add(num);
                 traverse(nums,track);
                 track.remove(track.size()-1);
+            }
+        }
+
+    }
+
+
+
+
+    public static List<List<Integer>> permute2(int[] nums) {
+        res = new LinkedList<>();
+        List<Integer> done = new LinkedList<>();
+        backtrack(done, nums);
+        return res;
+    }
+    public static List<List<Integer>> res;
+    public static void backtrack(List<Integer> done, int[] nums){
+        if (done.size()==nums.length) {
+            res.add(new LinkedList<>(done));
+            return;
+        }
+
+        for (int num : nums) {
+            if (!done.contains(num)){
+                done.add(num);
+                backtrack(done, nums);
+                done.remove(done.size()-1);
             }
         }
 
