@@ -5,6 +5,7 @@ public class s213 {
     public static void main(String[] args) {
         int[] nums = {2,3,2};
         System.out.println(rob(nums));
+        System.out.println(rob3(nums));
     }
 
 //    你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都 围成一圈 ，这意味着第一个房屋和最后一个房屋是紧挨着的。同时，相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警 。
@@ -36,6 +37,35 @@ public class s213 {
             i1 = res;
         }
         return res;
+    }
+
+
+    public static int rob3(int[] nums) {
+
+        int n = nums.length;
+
+        if (n==1){
+            return nums[0];
+        }
+
+        return Math.max(
+                rob_start_end(nums, 0, n-2),
+                rob_start_end(nums, 1, n-1)
+        );
+
+
+    }
+
+    public static int rob_start_end(int[] nums, int start, int end) {
+
+        int[] dp = new int[end-start+3];
+
+        for (int i = end - start; i >= 0; i--) {
+            dp[i] = Math.max(dp[i+1], dp[i+2]+nums[start+i]);
+        }
+
+        return dp[0];
+
     }
 
 }
