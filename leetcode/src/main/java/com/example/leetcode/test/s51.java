@@ -1,6 +1,7 @@
 package com.example.leetcode.test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class s51 {
@@ -96,7 +97,44 @@ public class s51 {
             panel.remove(panel.size()-1);
 
         }
+    }
 
+    public static List<List<String>> solveNQueens2(int n) {
+        res = new LinkedList<>();
+        int[][] nums = new int[n][n];
+        List<String> panel = new ArrayList<>();
+        backtrack(panel, 0, n);
+
+        return null;
+    }
+    public static List<List<String>> res;
+    // Q: 有棋子
+    // .: 没棋子
+    public static void backtrack(List<String> panel, int k, int n){
+        if (n==k){
+            res.add(new ArrayList<>(panel));
+            return;
+        }
+
+        for (int i = 0; i < n; i++) {
+
+            if (isValid(panel, k, i)) {
+            }
+
+
+
+        }
+
+    }
+
+    private static boolean isValid(List<String> panel, int k, int i) {
+        for (int j = 0; j < k; j++) {
+            if (panel.get(j).charAt(i)=='Q') {
+                return false;
+            }
+        }
+
+        return false;
     }
 
 
