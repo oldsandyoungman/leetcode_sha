@@ -12,6 +12,10 @@ public class s51 {
         for (List<String> strings : list) {
             System.out.println(strings);
         }
+        List<List<String>> list2 = solveNQueens2(4);
+        for (List<String> strings : list2) {
+            System.out.println(strings);
+        }
 //        ssss:
 //        for (int i = 0; i < 3; i++) {
 //            for (int j = 2; j < 7; j++) {
@@ -105,7 +109,7 @@ public class s51 {
         List<String> panel = new ArrayList<>();
         backtrack(panel, 0, n);
 
-        return null;
+        return res;
     }
     public static List<List<String>> res;
     // Q: 有棋子
@@ -118,23 +122,50 @@ public class s51 {
 
         for (int i = 0; i < n; i++) {
 
-            if (isValid(panel, k, i)) {
+            if (isValid(panel, k, i, n)) {
+                StringBuilder sb = new StringBuilder();
+                for (int i1 = 0; i1 < i; i1++) {
+                    sb.append(".");
+                }
+                sb.append("Q");
+                for (int i1 = i+1; i1 < n; i1++) {
+                    sb.append(".");
+                }
+                panel.add(sb.toString());
+
+                backtrack(panel, k+1, n);
+
+                panel.remove(panel.size()-1);
             }
-
-
-
         }
-
     }
 
-    private static boolean isValid(List<String> panel, int k, int i) {
+    private static boolean isValid(List<String> panel, int k, int i, int n) {
         for (int j = 0; j < k; j++) {
             if (panel.get(j).charAt(i)=='Q') {
                 return false;
             }
         }
+        int i1 = i;
+        int j1 = k;
+        int i2 = i;
+        int j2 = k;
+        while ( i1>0 && j1>0 ){
+            i1--;
+            j1--;
+            if (panel.get(j1).charAt(i1)=='Q') {
+                return false;
+            }
+        }
+        while ( i2<n-1 && j2>0 ){
+            i2++;
+            j2--;
+            if (panel.get(j2).charAt(i2)=='Q') {
+                return false;
+            }
+        }
 
-        return false;
+        return true;
     }
 
 
