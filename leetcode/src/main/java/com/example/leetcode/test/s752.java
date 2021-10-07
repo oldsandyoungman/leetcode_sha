@@ -6,8 +6,13 @@ public class s752 {
 
     public static void main(String[] args) {
 //        String[] deadends = new String[]{"0201","0101","0102","1212","2002"};
-        String[] deadends = new String[]{"0000"};
+        String[] deadends = new String[]{"8887","8889","8878","8898","8788","8988","7888","9888"};
+//        String[] deadends = new String[]{"0000"};
+
+
+//        String target = "0202";
         String target = "8888";
+//        String target = "8888";
         System.out.println(openLock(deadends, target));
     }
 
@@ -103,60 +108,142 @@ public class s752 {
 //        return new String(c);
 //    }
 
-    public static int openLock(String[] deadends, String target) {
-        Set<String> deadsha = new HashSet<>();
-        Collections.addAll(deadsha, deadends);
-        if (deadsha.contains("0000")){
-            return 0;
-        }
 
-        Queue<String> q = new LinkedList<>();
+
+
+//    public static int openLock(String[] deadends, String target) {
+//        Set<String> deadsha = new HashSet<>();
+//        Collections.addAll(deadsha, deadends);
+//        if (deadsha.contains("0000")){
+//            return 0;
+//        }
+//
+//        Queue<String> q = new LinkedList<>();
+//        q.offer("0000");
+//        int step = 0;
+//
+//        while (!q.isEmpty()) {
+//            int n = q.size();
+//            for (int i = 0; i < n; i++) {
+//                String cur = q.poll();
+//                if (cur.equals(target)) {
+//                    return step;
+//                }
+//                for (int j = 0; j < 4; j++) {
+//                    String up = up_sha(cur,j);
+//                    if (!deadsha.contains(up)) {
+//                        q.offer(up);
+//                        deadsha.add(up);
+//                    }
+//                    String down = down_sha(cur,j);
+//                    if (!deadsha.contains(down)) {
+//                        q.offer(down);
+//                        deadsha.add(down);
+//                    }
+//                }
+//            }
+//            step++;
+//        }
+//        return step;
+//    }
+//
+//    private static String up_sha(String cur, int j) {
+//        char[] res = cur.toCharArray();
+//        if (res[j]=='9') {
+//            res[j] = '0';
+//        }else {
+//            res[j]++;
+//        }
+//        return new String(res);
+//    }
+//    private static String down_sha(String cur, int j) {
+//        char[] res = cur.toCharArray();
+//        if (res[j]=='0') {
+//            res[j] = '9';
+//        }else {
+//            res[j]--;
+//        }
+//        return new String(res);
+//    }
+
+
+
+
+
+
+
+
+
+    public static int openLock(String[] deadends, String target) {
+
+        HashSet<String> game_over = new HashSet<>();
+        Collections.addAll(game_over, deadends);
+        if (game_over.contains("0000")){
+            return -1;
+        }
+        game_over.add("0000");
+        Deque<String> q = new LinkedList<>();
         q.offer("0000");
-        int step = 0;
+        int sum = 0;
 
         while (!q.isEmpty()) {
             int n = q.size();
             for (int i = 0; i < n; i++) {
-                String cur = q.poll();
-                if (cur.equals(target)) {
-                    return step;
+                String now = q.poll();
+                assert now != null;
+                if (now.equals(target)) {
+                    return sum;
                 }
                 for (int j = 0; j < 4; j++) {
-                    String up = up_sha(cur,j);
-                    if (!deadsha.contains(up)) {
-                        q.offer(up);
-                        deadsha.add(up);
+                    String s1 = up_sha(now, j);
+                    if (!game_over.contains(s1)) {
+                        q.offer(s1);
+                        game_over.add(s1);
                     }
-                    String down = down_sha(cur,j);
-                    if (!deadsha.contains(down)) {
-                        q.offer(down);
-                        deadsha.add(down);
+                    String s2 = down_sha(now, j);
+                    if (!game_over.contains(s2)) {
+                        q.offer(s2);
+                        game_over.add(s2);
                     }
                 }
             }
-            step++;
+            sum++;
         }
-        return step;
+        return -1;
+
+    }
+    public static String up_sha(String cur, int j) {
+        char[] chars = cur.toCharArray();
+        if (chars[j]=='9') {
+            chars[j]='0';
+        }else {
+            chars[j]++;
+        }
+        // 这个写法是错的
+//        return Arrays.toString(chars);
+        return new String(chars);
+    }
+    public static String down_sha(String cur, int j) {
+        char[] chars = cur.toCharArray();
+        if (chars[j]=='0') {
+            chars[j]='9';
+        }else {
+            chars[j]--;
+        }
+        // 这个写法是错的
+//        return Arrays.toString(chars);
+        return new String(chars);
     }
 
-    private static String up_sha(String cur, int j) {
-        char[] res = cur.toCharArray();
-        if (res[j]=='9') {
-            res[j] = '0';
-        }else {
-            res[j]++;
-        }
-        return new String(res);
-    }
-    private static String down_sha(String cur, int j) {
-        char[] res = cur.toCharArray();
-        if (res[j]=='0') {
-            res[j] = '9';
-        }else {
-            res[j]--;
-        }
-        return new String(res);
-    }
+
+
+
+
+
+
+
+
+
 
 
 }
