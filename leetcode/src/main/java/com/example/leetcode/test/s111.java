@@ -2,6 +2,7 @@ package com.example.leetcode.test;
 
 import com.example.leetcode.bean_sha.TreeNode;
 
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -25,6 +26,7 @@ public class s111 {
 
 //        List<Integer> integers = inorderTraversal(null);
         System.out.println(minDepth(a));
+        System.out.println(minDepth2(a));
     }
 
 //    给定一个二叉树，找出其最小深度。
@@ -94,6 +96,7 @@ public class s111 {
             int n = q.size();
             for (int i = 0; i < n; i++) {
                 TreeNode cur = q.poll();
+                assert cur != null;
                 if (cur.left==null && cur.right==null){
                     return depth;
                 }
@@ -107,6 +110,38 @@ public class s111 {
             depth++;
         }
         return depth;
+    }
+
+
+
+    public static int minDepth2(TreeNode root) {
+        if (root==null) {
+            return 0;
+        }
+
+        Deque<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+
+        int dep = 1;
+
+        while (!q.isEmpty()) {
+            int n = q.size();
+            for (int i = 0; i < n; i++) {
+                TreeNode now = q.poll();
+                assert now != null;
+                if (now.left==null && now.right==null){
+                    return dep;
+                }
+                if (now.left!=null){
+                    q.offer(now.left);
+                }
+                if (now.right!=null){
+                    q.offer(now.right);
+                }
+            }
+            dep++;
+        }
+        return dep;
     }
 
 
