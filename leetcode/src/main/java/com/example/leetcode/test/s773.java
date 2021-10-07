@@ -5,7 +5,8 @@ import java.util.*;
 public class s773 {
 
     public static void main(String[] args) {
-        int[][] a = {{4,1,2},{5,0,3}};
+//        int[][] a = {{4,1,2},{5,0,3}};
+        int[][] a = {{1,2,3},{5,4,0}};
         System.out.println(slidingPuzzle(a));
 
     }
@@ -23,60 +24,124 @@ public class s773 {
 //    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 
+//    public static int slidingPuzzle(int[][] board) {
+//
+//        int m = board.length;
+//        int n = board[0].length;
+//        StringBuilder sb = new StringBuilder();
+//
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                sb.append(board[i][j]);
+//            }
+//        }
+//        String start = sb.toString();
+//        String target = "123450";
+//        List<int[]> list = new ArrayList<>();
+//        list.add(new int[]{1, 3});
+//        list.add(new int[]{0, 2, 4});
+//        list.add(new int[]{1, 5});
+//        list.add(new int[]{0, 4});
+//        list.add(new int[]{1, 3, 5});
+//        list.add(new int[]{2, 4});
+//        if (start.equals(target)){
+//            return 0;
+//        }
+//        Queue<String> q = new LinkedList<>();
+//        q.offer(sb.toString());
+//        Set<String> visited = new HashSet<>();
+//        visited.add(start);
+//        int step = 0;
+//
+//        while (!q.isEmpty()){
+//            int sz = q.size();
+//            for (int i = 0; i < sz; i++) {
+//                String cur = q.poll();
+//                if (target.equals(cur)) {
+//                    return step;
+//                }
+//                int j = 0;
+//                while (cur.charAt(j)!='0'){
+//                    j++;
+//                }
+//                for (int k : list.get(j)) {
+//                    char temp = cur.charAt(k);
+//                    String temp_string = cur.replace('0','x');
+//                    temp_string = temp_string.replace(temp, '0');
+//                    temp_string = temp_string.replace('x',temp);
+//                    if (!visited.contains(temp_string)) {
+//                        q.offer(temp_string);
+//                        visited.add(temp_string);
+//                    }
+//                }
+//            }
+//            step++;
+//        }
+//        return -1;
+//    }
+
+
     public static int slidingPuzzle(int[][] board) {
-
-        int m = board.length;
-        int n = board[0].length;
         StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                sb.append(board[i][j]);
+        for (int[] ints : board) {
+            for (int j = 0; j < board[0].length; j++) {
+                sb.append(ints[j]);
             }
         }
-        String start = sb.toString();
-        String target = "123450";
-        List<int[]> list = new ArrayList<>();
-        list.add(new int[]{1, 3});
-        list.add(new int[]{0, 2, 4});
-        list.add(new int[]{1, 5});
-        list.add(new int[]{0, 4});
-        list.add(new int[]{1, 3, 5});
-        list.add(new int[]{2, 4});
-        if (start.equals(target)){
-            return 0;
-        }
-        Queue<String> q = new LinkedList<>();
-        q.offer(sb.toString());
-        Set<String> visited = new HashSet<>();
-        visited.add(start);
-        int step = 0;
+        String s = sb.toString();
+        Deque<String> q = new LinkedList<>();
+        q.offer(s);
 
-        while (!q.isEmpty()){
-            int sz = q.size();
-            for (int i = 0; i < sz; i++) {
-                String cur = q.poll();
-                if (target.equals(cur)) {
-                    return step;
+        List<int[]> list = new ArrayList<>();
+        list.add(new int[]{1,3});
+        list.add(new int[]{0,2,4});
+        list.add(new int[]{1,5});
+        list.add(new int[]{0,4});
+        list.add(new int[]{1,3,5});
+        list.add(new int[]{2,4});
+
+        HashSet<String> visited = new HashSet<>();
+        visited.add(s);
+
+        int steps = 0;
+
+        while (!q.isEmpty()) {
+            int n = q.size();
+            for (int i = 0; i < n; i++) {
+                String cur = q.pop();
+
+                if (cur.equals("123450")) {
+                    return steps;
                 }
-                int j = 0;
-                while (cur.charAt(j)!='0'){
-                    j++;
-                }
-                for (int k : list.get(j)) {
-                    char temp = cur.charAt(k);
-                    String temp_string = cur.replace('0','x');
-                    temp_string = temp_string.replace(temp, '0');
-                    temp_string = temp_string.replace('x',temp);
-                    if (!visited.contains(temp_string)) {
-                        q.offer(temp_string);
-                        visited.add(temp_string);
+
+                int j;
+                for (j = 0; j < cur.length(); j++) {
+                    if (cur.charAt(j)=='0') {
+                        break;
                     }
                 }
+
+                for (int k : list.get(j)) {
+                    char[] chars = cur.toCharArray();
+
+                    char temp = chars[j];
+                    chars[j] = chars[k];
+                    chars[k] = temp;
+
+                    String newString = new String(chars);
+                    if (!visited.contains(newString)) {
+                        q.offer(new String(chars));
+                        visited.add(newString);
+                    }
+
+                }
             }
-            step++;
+            steps++;
         }
+
         return -1;
+
+
     }
 
 
