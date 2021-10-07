@@ -36,35 +36,101 @@ public class s22 {
 //
 //    有效括号组合需满足：左括号必须以正确的顺序闭合。
 
+//    public static List<String> generateParenthesis(int n) {
+//        res = new ArrayList<>();
+//        //        Stack<Character> s = new Stack<>();
+//        StringBuilder s = new StringBuilder();
+//        backtrack(n, n, s);
+//        return res;
+//    }
+//
+//    public static List<String> res;
+//
+//    public static void backtrack(int left, int right, StringBuilder s){
+//        if (left<0 || right<0) {
+//            return;
+//        }
+//        if (left>right) {
+//            return;
+//        }
+//        if (left==0 && right==0){
+//            res.add(s.toString());
+//            return;
+//        }
+//
+//        s.append('(');
+//        backtrack(left-1,right,s);
+//        s.deleteCharAt(s.length()-1);
+//
+//        s.append(')');
+//        backtrack(left,right-1,s);
+//        s.deleteCharAt(s.length()-1);
+//
+//    }
+
+
     public static List<String> generateParenthesis(int n) {
         res = new ArrayList<>();
-        //        Stack<Character> s = new Stack<>();
-        StringBuilder s = new StringBuilder();
-        backtrack(n, n, s);
+        StringBuilder sb = new StringBuilder();
+        backtrack(n, n, sb);
         return res;
     }
-
     public static List<String> res;
+    public static void backtrack(int n1, int n2, StringBuilder now) {
+//        if (n1>n2) {
+//            return;
+//        }
+//        if (n1==0 && n2==0) {
+//            res.add(new String(now));
+//            return;
+//        }
+//
+//        if (n1==0) {
+//            now.append(")");
+//            backtrack(n1, n2-1, now);
+//            now.deleteCharAt(now.length()-1);
+//            return;
+//        }
+//
+//        if (n1==n2){
+//            now.append("(");
+//            backtrack(n1-1, n2, now);
+//            now.deleteCharAt(now.length()-1);
+//            return;
+//        }
+//
+//        now.append("(");
+//        backtrack(n1-1, n2, now);
+//        now.deleteCharAt(now.length()-1);
+//
+//        now.append(")");
+//        backtrack(n1, n2-1, now);
+//        now.deleteCharAt(now.length()-1);
 
-    public static void backtrack(int left, int right, StringBuilder s){
-        if (left<0 || right<0) {
+        if (n1<0 || n2<0) {
             return;
         }
-        if (left>right) {
+        if (n1>n2) {
             return;
         }
-        if (left==0 && right==0){
-            res.add(s.toString());
+        if (n1==0 && n2==0) {
+//            res.add(new String(now));
+            res.add(now.toString());
             return;
         }
 
-        s.append('(');
-        backtrack(left-1,right,s);
-        s.deleteCharAt(s.length()-1);
+        // 单引号时间更快
+//        now.append("(");
+        now.append('(');
+        backtrack(n1-1, n2, now);
+        now.deleteCharAt(now.length()-1);
 
-        s.append(')');
-        backtrack(left,right-1,s);
-        s.deleteCharAt(s.length()-1);
+//        now.append(")");
+        now.append(')');
+        backtrack(n1, n2-1, now);
+        now.deleteCharAt(now.length()-1);
 
     }
+
+
 }
