@@ -25,7 +25,12 @@ public class s877 {
 //    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 
+//    // dp table 方法
+    public static boolean stoneGame11(int[] piles) {
 
+        return true;
+
+    }
 //    // dp table 方法
     public static boolean stoneGame(int[] piles) {
         int n = piles.length;
