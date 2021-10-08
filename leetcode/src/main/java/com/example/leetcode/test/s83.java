@@ -101,6 +101,10 @@ public class s83 {
 
     public static ListNode deleteDuplicates4(ListNode head) {
 
+        if (head==null) {
+            return null;
+        }
+
         ListNode left = head;
         ListNode right = head;
 
@@ -111,7 +115,6 @@ public class s83 {
             }
             right = right.next;
         }
-        assert left != null;
         left.next=null;
 
         return head;
