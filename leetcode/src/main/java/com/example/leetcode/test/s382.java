@@ -3,6 +3,7 @@ package com.example.leetcode.test;
 import com.example.leetcode.bean_sha.ListNode;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class s382 {
@@ -160,4 +161,33 @@ public class s382 {
     }
 
 
+}
+
+
+class Solution23333 {
+
+    Random r = new Random();
+    ListNode head;
+
+    /** @param head The linked list's head.
+    Note that the head is guaranteed to be not null, so it contains at least one node. */
+    public Solution23333(ListNode head) {
+        this.head = head;
+    }
+
+    /** Returns a random node's value. */
+    public int getRandom() {
+        int i = 0, res = 0;
+        ListNode p = head;
+        // while 循环遍历链表
+        while (p != null) {
+            // 生成一个 [0, i) 之间的整数
+            // 这个整数等于 0 的概率就是 1/i
+            if (r.nextInt(++i) == 0) {
+                res = p.val;
+            }
+            p = p.next;
+        }
+        return res;
+    }
 }
