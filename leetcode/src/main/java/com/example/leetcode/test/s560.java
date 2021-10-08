@@ -19,11 +19,11 @@ public class s560 {
 
     public static int subarraySum(int[] nums, int k) {
         int n = nums.length;
-//        int[] preSum = new int[n];
+//        int[] preSum = new int[n+1];
 
         // map(m,n): 0-i的元素和为 m 的有 n 个
         HashMap<Integer, Integer> map = new HashMap<>();
-
+        // 因为preSum是n+1个，所以有preSum[0] = 0
         map.put(0, 1);
 
         int ans = 0;
