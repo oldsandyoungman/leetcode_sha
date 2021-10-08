@@ -5,12 +5,21 @@ public class s26 {
     public static void main(String[] args) {
 
         int[] a = {1,1,2,3,4,5,5,6};
+        int[] a2 = {1,1,2,3,4,5,5,6};
 
 //        System.out.println(removeDuplicates(a));
         int temp = removeDuplicates(a);
-        for (int i = 0; i < temp; i++) {
-            System.out.println(a[i]);
-        }
+        int temp2 = removeDuplicates2(a2);
+
+        System.out.println(temp);
+        System.out.println(temp2);
+
+//        for (int i = 0; i < temp; i++) {
+//            System.out.println(a[i]);
+//        }
+//        for (int i = 0; i < temp2; i++) {
+//            System.out.println(a[i]);
+//        }
 
     }
 
@@ -59,5 +68,25 @@ public class s26 {
         }
         return slow+1;
     }
+
+
+
+    public static int removeDuplicates2(int[] nums) {
+        int n = nums.length;
+        int left = 0;
+        int right = 0;
+
+        while (right<n) {
+            if (nums[left]!=nums[right]){
+                left++;
+                nums[left]=nums[right];
+            }
+            right++;
+        }
+
+        return left+1;
+
+    }
+
 
 }

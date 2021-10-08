@@ -52,4 +52,38 @@ public class s27 {
     }
 
 
+    public static int removeElement2(int[] nums, int val) {
+
+        int n = nums.length;
+
+        int left = 0;
+        int right = 0;
+
+        while (right<n){
+
+            if (nums[right]!=val) {
+                nums[left] = nums[right];
+                left++;
+            }
+            right++;
+
+        }
+
+        return left;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

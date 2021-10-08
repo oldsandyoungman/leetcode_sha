@@ -26,8 +26,9 @@ public class s83 {
         h.next = i;
 
         System.out.println(a);
-        System.out.println(deleteDuplicates(a));
-        System.out.println(deleteDuplicates2(a));
+//        System.out.println(deleteDuplicates(a));
+//        System.out.println(deleteDuplicates2(a));
+        System.out.println(deleteDuplicates4(a));
 
     }
 //    存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除链表中所有存在数字重复情况的节点，只保留原始链表中 没有重复出现 的数字。
@@ -95,4 +96,26 @@ public class s83 {
 
         return head;
     }
+
+
+
+    public static ListNode deleteDuplicates4(ListNode head) {
+
+        ListNode left = head;
+        ListNode right = head;
+
+        while (right!=null){
+            if (left.val!=right.val){
+                left.next = right;
+                left = left.next;
+            }
+            right = right.next;
+        }
+        assert left != null;
+        left.next=null;
+
+        return head;
+
+    }
+
 }
