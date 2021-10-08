@@ -20,70 +20,93 @@ public class s645 {
 //
 //    请你找出重复出现的整数，再找到丢失的整数，将它们以数组的形式返回。
 
-    public static  int[] findErrorNums(int[] nums) {
-
-        Arrays.sort(nums);
-
-        int[] a = {-1, -1};
-        int sum = 0;
-        boolean flag = false;
-
-        for (int i = 0; i < nums.length; i++) {
-            nums[i] = nums[i] - i - 1;
-            sum = sum + nums[i];
-            if(!flag){
-                if(nums[i] == 1){
-                    a[1] = i+1;
-                    flag = true;
-                }else{
-                    if(nums[i] == -1){
-                        a[0] = i;
-                        flag = true;
-                    }
-                }
-
-            }
-        }
-
-        if(sum>0){
-            a[0] = a[1] + sum;
-        }else{
-            if(sum<0){
-                a[1] = a[0] - sum;
-            }
-        }
-
-//        boolean flag = true;
+//    public static  int[] findErrorNums(int[] nums) {
+//
+//        Arrays.sort(nums);
+//
+//        int[] a = {-1, -1};
+//        int sum = 0;
+//        boolean flag = false;
 //
 //        for (int i = 0; i < nums.length; i++) {
+//            nums[i] = nums[i] - i - 1;
+//            sum = sum + nums[i];
+//            if(!flag){
+//                if(nums[i] == 1){
+//                    a[1] = i+1;
+//                    flag = true;
+//                }else{
+//                    if(nums[i] == -1){
+//                        a[0] = i;
+//                        flag = true;
+//                    }
+//                }
 //
-//            if(flag){
-//                if(nums[i] < i+1){
-//                    a[0] = nums[i];
-//                    flag = false;
-//                }else {
-//                    if(nums[i] > i+1){
-//                        a[1] = i+1;
-//                    }
-//                    flag = false;
-//                }
-//            }else{
-//                if(nums[i] == i+1){
-//                    if(nums[i-1] < i){
-//                        a[1] = i;
-//                        return a;
-//                    }else{
-//                        a[0] = nums[i-1];
-//                        return a;
-//                    }
-//                }
 //            }
-//
 //        }
+//
+//        if(sum>0){
+//            a[0] = a[1] + sum;
+//        }else{
+//            if(sum<0){
+//                a[1] = a[0] - sum;
+//            }
+//        }
+//
+////        boolean flag = true;
+////
+////        for (int i = 0; i < nums.length; i++) {
+////
+////            if(flag){
+////                if(nums[i] < i+1){
+////                    a[0] = nums[i];
+////                    flag = false;
+////                }else {
+////                    if(nums[i] > i+1){
+////                        a[1] = i+1;
+////                    }
+////                    flag = false;
+////                }
+////            }else{
+////                if(nums[i] == i+1){
+////                    if(nums[i-1] < i){
+////                        a[1] = i;
+////                        return a;
+////                    }else{
+////                        a[0] = nums[i-1];
+////                        return a;
+////                    }
+////                }
+////            }
+////
+////        }
+//
+//
+//
+//        return a;
+//    }
 
 
+    public static int[] findErrorNums(int[] nums) {
+        int dup = 0;
+        int mis = 0;
+        for (int num : nums) {
+            int x = Math.abs(num)-1;
+            if (nums[x]<0){
+                dup = Math.abs(num);
+            }else {
+                nums[x] = -nums[x];
+            }
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i]>0){
+                mis = i+1;
+            }
+        }
 
-        return a;
+        return new int[]{dup, mis};
+
+
     }
 
 }
