@@ -10,6 +10,8 @@ public class s56 {
     public static void main(String[] args) {
         int[][] intvs = new int[][]{{1,3},{2,6},{8,10},{15,18}};
         System.out.println(Arrays.deepToString(merge(intvs)));
+        System.out.println(Arrays.deepToString(merge2(intvs)));
+        System.out.println(Arrays.deepToString(merge3(intvs)));
     }
 
 //    以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。请你合并所有重叠的区间，并返回一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间。
@@ -73,6 +75,43 @@ public class s56 {
         }
 
         return Arrays.copyOf(res,idx+1);
+    }
+
+
+
+    public static int[][] merge3(int[][] intervals) {
+        int n = intervals.length;
+
+        Arrays.sort(intervals, (o1, o2) -> {
+            if (o1[0]==o2[0]){
+                return Integer.compare(o2[1], o1[1]);
+            }else {
+                return Integer.compare(o1[0], o2[0]);
+            }
+        });
+
+        List<int[]> res = new ArrayList<>();
+
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+        for (int i = 1; i < n; i++) {
+            if (intervals[i][0]>end){
+                res.add(new int[]{start, end});
+                start = intervals[i][0];
+                end = intervals[i][1];
+            } else if (intervals[i][1]>end) {
+                end = intervals[i][1];
+            }
+        }
+        res.add(new int[]{start, end});
+
+        int[][] res_array = new int[res.size()][2];
+        for (int i = 0; i < res_array.length; i++) {
+            res_array[i][0] = res.get(i)[0];
+            res_array[i][1] = res.get(i)[1];
+        }
+        return res_array;
+
     }
 
 }

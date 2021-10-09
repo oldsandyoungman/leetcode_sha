@@ -9,6 +9,7 @@ public class s986 {
         int[][] secondList = {{1,5},{8,12},{15,24},{25,26}};
 
         System.out.println(Arrays.deepToString(intervalIntersection(firstList, secondList)));
+        System.out.println(Arrays.deepToString(intervalIntersection2(firstList, secondList)));
 
     }
 
@@ -51,5 +52,43 @@ public class s986 {
 
         return Arrays.copyOf(res, idx);
     }
+
+    public static int[][] intervalIntersection2(int[][] firstList, int[][] secondList) {
+        int n1 = firstList.length;
+        int n2 = secondList.length;
+        int[][] res = new int[n1+n2][2];
+
+        int i = 0;
+        int j = 0;
+        int idx = 0;
+
+        while (i<n1 && j<n2) {
+
+            int a1 = firstList[i][0];
+            int a2 = firstList[i][1];
+            int b1 = secondList[j][0];
+            int b2 = secondList[j][1];
+
+            if (a1<=b2 && b1<=a2) {
+                res[idx][0] = Math.max(a1,b1);
+                res[idx][1] = Math.min(a2,b2);
+//                res[idx] = new int[]{Math.max(a1,b1), Math.min(a2,b2)};
+                idx++;
+            }
+
+            if (a2<=b2) {
+                i++;
+            }
+
+            if (a2>b2) {
+                j++;
+            }
+
+        }
+
+        return Arrays.copyOf(res, idx);
+
+    }
+
 
 }

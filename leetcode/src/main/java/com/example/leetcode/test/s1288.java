@@ -57,4 +57,38 @@ public class s1288 {
         return n-res;
     }
 
+
+    public static int removeCoveredIntervals2(int[][] intervals) {
+
+        Arrays.sort(intervals, (o1, o2) -> {
+            if (o1[0]==o2[0]){
+                return Integer.compare(o2[1], o1[1]);
+            }else {
+                return Integer.compare(o1[0], o2[0]);
+            }
+        });
+
+        int n = intervals.length;
+        int left = intervals[0][0];
+        int right = intervals[0][1];
+        int res = 0;
+
+        for (int i = 1; i < n; i++) {
+            int l = intervals[i][0];
+            int r = intervals[i][1];
+            if (l>=left && r<=right) {
+                res++;
+            } else if (l>=left && r>right) {
+                right = r;
+            } else if (right<=l) {
+                left = l;
+                right = r;
+            }
+        }
+
+        return  n-res;
+
+
+    }
+
 }
