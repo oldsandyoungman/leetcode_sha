@@ -2,13 +2,15 @@ package com.example.leetcode.test;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class s1 {
 
     public static void main(String[] args) {
 //        int[] nums = {2,7,11,15};
 //        int[] nums = {3, 3};
-        int[] nums = {3,2,4};
+//        int[] nums = {3,2,4};
+        int[] nums = {3, 1, 3, 6};
 //        int target = 9;
         int target = 6;
 
@@ -53,28 +55,94 @@ public class s1 {
 
     }
 
-    // 索引变了，不能解决问题
+//    // 索引变了，不能解决问题
+//    public static int[] twoSum2(int[] nums, int target) {
+//
+//        Arrays.sort(nums);
+//
+//        int n = nums.length;
+//        int left = 0;
+//        int right = n-1;
+//        while (left<right){
+//            int sum = nums[left] + nums[right];
+//            if (sum<target){
+//                left++;
+//            }else if (sum>target){
+//                right--;
+//            }else {
+//                return new int[]{left, right};
+//            }
+//        }
+//        return new int[]{-1,-1};
+//
+//    }
+
+
     public static int[] twoSum2(int[] nums, int target) {
+        HashMap<Integer, Integer> map = new HashMap<>();
 
-        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], i);
+        }
 
-        int n = nums.length;
-        int left = 0;
-        int right = n-1;
-        while (left<right){
-            int sum = nums[left] + nums[right];
-            if (sum<target){
-                left++;
-            }else if (sum>target){
-                right--;
-            }else {
-                return new int[]{left, right};
+        // 因为只有一个答案，所以覆盖了也不要紧
+
+        for (int i = 0; i < nums.length; i++) {
+            int other = target - nums[i];
+            if (map.containsKey(other) && map.get(other)!=i){
+                return new int[]{i, map.get(other)};
             }
         }
+
         return new int[]{-1,-1};
+
+
 
     }
 
 
-
 }
+
+
+
+class TwoSum11 {
+
+    HashMap<Integer, Integer> fre = new HashMap<>();
+
+    // 向数据结构中添加一个数 number
+    public void add(int number){
+        fre.put(number, fre.getOrDefault(number, 0)+1);
+    }
+    // 寻找当前数据结构中是否存在两个数的和为 value
+    public boolean find(int value){
+        for (Integer integer : fre.keySet()) {
+            int other = value - integer;
+            if (other!=integer && fre.containsKey(other)){
+                return true;
+            }
+            if (other==integer && fre.get(other)>1){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+class TwoSum22 {
+
+    HashSet<Integer> sum = new HashSet<>();
+    HashSet<Integer> num = new HashSet<>();
+
+    // 向数据结构中添加一个数 number
+    public void add(int number){
+        for (Integer integer : num) {
+            sum.add(integer+number);
+        }
+        num.add(number);
+    }
+    // 寻找当前数据结构中是否存在两个数的和为 value
+    public boolean find(int value){
+        return sum.contains(value);
+    }
+}
+
