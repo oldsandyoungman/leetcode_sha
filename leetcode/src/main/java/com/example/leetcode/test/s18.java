@@ -82,4 +82,73 @@ public class s18 {
         return res;
     }
 
+
+    public static List<List<Integer>> fourSum2(int[] nums, int target) {
+        Arrays.sort(nums);
+        return nSum2(nums, 4,0,target);
+    }
+
+    public static List<List<Integer>> nSum2(int[] nums, int nn, int start, int target) {
+
+        int n = nums.length;
+        List<List<Integer>> res = new ArrayList<>();
+
+        if (nn==2) {
+            int left = start;
+            int right = n-1;
+            while (left<right){
+                int tl = nums[left];
+                int rl = nums[right];
+                int sum = tl+rl;
+                if (sum<target) {
+                    left++;
+                    while (left<right && nums[left]==tl){
+                        left++;
+                    }
+                } else if (sum>target) {
+                    right--;
+                    while (left<right && nums[right]==rl){
+                        right--;
+                    }
+                }else {
+                    List<Integer> restemp = new ArrayList<>();
+                    restemp.add(tl);
+                    restemp.add(rl);
+                    res.add(restemp);
+                    left++;
+                    while (left<right && nums[left]==tl){
+                        left++;
+                    }
+                    right--;
+                    while (left<right && nums[right]==rl){
+                        right--;
+                    }
+                }
+
+
+            }
+            return res;
+
+        }else {
+
+            for (int i = start; i < n; i++) {
+                List<List<Integer>> res2 = nSum2(nums, nn-1, i+1, target-nums[i]);
+                for (List<Integer> integers : res2) {
+                    integers.add(nums[i]);
+                    res.add(integers);
+                }
+                while (i<n-nn+1 && nums[i]==nums[i+1]){
+                    i++;
+                }
+            }
+            return res;
+
+        }
+
+
+
+    }
+
+
+
 }
