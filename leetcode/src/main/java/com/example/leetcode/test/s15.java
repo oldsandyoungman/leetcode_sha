@@ -104,4 +104,73 @@ public class s15 {
 
     }
 
+
+
+    public static List<List<Integer>> threeSum2(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            List<List<Integer>> res2 = twoSum2(nums, i+1, -nums[i]);
+            for (List<Integer> integers : res2) {
+                integers.add(nums[i]);
+                res.add(integers);
+            }
+
+            while (i<n-2 && nums[i]==nums[i+1]) {
+                i++;
+            }
+
+        }
+
+        return res;
+
+    }
+
+
+
+
+    public static List<List<Integer>> twoSum2(int[] nums, int start, int target) {
+
+        int n = nums.length;
+        List<List<Integer>> res = new ArrayList<>();
+
+        int left = start;
+        int right = n-1;
+
+        while (left<right){
+            int templ = nums[left];
+            int tempr = nums[right];
+            int sum = templ+tempr;
+            if (sum<target){
+                left++;
+                while (left<right && nums[left]==templ){
+                    left++;
+                }
+            }else if (sum>target){
+                right--;
+                while (right>left && nums[right]==tempr){
+                    right--;
+                }
+            }else {
+                List<Integer> r = new ArrayList<>();
+                r.add(nums[left]);
+                r.add(nums[right]);
+                res.add(r);
+                left++;
+                while (left<right && nums[left]==templ){
+                    left++;
+                }
+                right--;
+                while (right>left && nums[right]==tempr){
+                    right--;
+                }
+            }
+        }
+
+        return res;
+
+    }
+
+
 }
