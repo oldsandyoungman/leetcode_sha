@@ -7,11 +7,13 @@ public class s1 {
 
     public static void main(String[] args) {
 //        int[] nums = {2,7,11,15};
-        int[] nums = {3, 3};
+//        int[] nums = {3, 3};
+        int[] nums = {3,2,4};
 //        int target = 9;
         int target = 6;
 
         System.out.println(Arrays.toString(twoSum(nums, target)));
+        System.out.println(Arrays.toString(twoSum2(nums, target)));
 
     }
 
@@ -48,6 +50,28 @@ public class s1 {
 //            }
 //        }
         return new int[]{-1, -1};
+
+    }
+
+    // 索引变了，不能解决问题
+    public static int[] twoSum2(int[] nums, int target) {
+
+        Arrays.sort(nums);
+
+        int n = nums.length;
+        int left = 0;
+        int right = n-1;
+        while (left<right){
+            int sum = nums[left] + nums[right];
+            if (sum<target){
+                left++;
+            }else if (sum>target){
+                right--;
+            }else {
+                return new int[]{left, right};
+            }
+        }
+        return new int[]{-1,-1};
 
     }
 
