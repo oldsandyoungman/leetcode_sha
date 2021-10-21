@@ -1,4 +1,4 @@
-package com.example.leetcode.daily.jian_zhi_offer_2;
+package com.example.leetcode.daily.jian_zhi_offer;
 
 public class s46 {
 
