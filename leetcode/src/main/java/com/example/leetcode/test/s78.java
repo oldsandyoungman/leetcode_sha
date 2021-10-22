@@ -21,32 +21,34 @@ public class s78 {
         return res;
     }
     public static List<List<Integer>> res;
-//    public static void backtrack(int[] nums, int start, List<Integer> now){
-//        if (start== nums.length) {
-//            res.add(new ArrayList<>(now));
-//            return;
-//        }
-//
-//        now.add(nums[start]);
-//        backtrack(nums, start+1, now);
-//
-//        now.remove(now.size()-1);
-//        backtrack(nums, start+1, now);
-//
-//    }
+    // 方法一
     public static void backtrack(int[] nums, int start, List<Integer> now){
-//        if (start== nums.length) {
-//            res.add(new ArrayList<>(now));
-//            return;
-//        }
-        res.add(new ArrayList<>(now));
-
-        for (int i = start; i < nums.length; i++) {
-            now.add(nums[i]);
-            backtrack(nums, i+1, now);
-            now.remove(now.size()-1);
+        if (start== nums.length) {
+            res.add(new ArrayList<>(now));
+            return;
         }
 
+        now.add(nums[start]);
+        backtrack(nums, start+1, now);
+
+        now.remove(now.size()-1);
+        backtrack(nums, start+1, now);
+
     }
+//    // 方法二
+//    public static void backtrack(int[] nums, int start, List<Integer> now){
+////        if (start== nums.length) {
+////            res.add(new ArrayList<>(now));
+////            return;
+////        }
+//        res.add(new ArrayList<>(now));
+//
+//        for (int i = start; i < nums.length; i++) {
+//            now.add(nums[i]);
+//            backtrack(nums, i+1, now);
+//            now.remove(now.size()-1);
+//        }
+//
+//    }
 
 }
